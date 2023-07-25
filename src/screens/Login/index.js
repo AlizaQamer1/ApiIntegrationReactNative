@@ -26,6 +26,7 @@ export default function Login({navigation}) {
     setUserNameError('');
     setPasswordError('');
 
+    //handle error if username and password input is null
     if (userName.trim() === '') {
       setUserNameError('Username is required.');
     }
@@ -48,7 +49,9 @@ export default function Login({navigation}) {
       <View style={styles.logincontainer}>
         <View style={styles.loginscreen}>
           <Image style={styles.logoimage} source={images.logo_image} />
+          <Text style={styles.title}>Sign In to Continue</Text>
           <View style={styles.loginform}>
+          {/*Handling username input */}
             <Text style={styles.text}>Username</Text>
             <TextInput
               value={userName}
@@ -63,9 +66,11 @@ export default function Login({navigation}) {
               blurOnSubmit={false}
               onFocus={handleUserNameFocus}
             />
+              {/*Showing error */}
             {!!userNameError && (
               <Text style={styles.errorText}>{userNameError}</Text>
             )}
+              {/*Handling passwoed input */}
             <Text style={styles.text}>Password</Text>
             <TextInput
               value={password}
@@ -80,14 +85,17 @@ export default function Login({navigation}) {
               secureTextEntry
               onFocus={handlePasswordFocus}
             />
+               {/*Showing error */}
             {!!passwordError && (
               <Text style={styles.errorText}>{passwordError}</Text>
             )}
             <View style={styles.loginbutton}>
               <Button title="Login" color="#0492C2" onPress={handleLogin} />
             </View>
+               {/*Login Footer */}
             <View style={styles.loginfooter}>
               <View style={styles.leftfooter}>
+                 {/*Remember Me*/}
                 <RadioForm
                   radio_props={radioProps}
                   initial={0}
@@ -101,6 +109,7 @@ export default function Login({navigation}) {
                   }}
                 />
               </View>
+                 {/*Forgot Password and Registeration screens links */}
               <View style={styles.rightfooter}>
                 <TouchableOpacity
                   onPress={() => navigation.navigate('ForgotPassword')}>

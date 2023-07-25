@@ -5,6 +5,14 @@ const styles = {
     color: 'gray',
     marginLeft: 10,
   },
+  title:{
+    color:"black",
+    marginLeft:10,
+    fontSize:20,
+    marginTop:30,
+    fontWeight:"bold"
+
+  },
   loginform: {
     marginTop: 30,
   },
@@ -14,10 +22,8 @@ const styles = {
   },
 
   loginscreen: {
-    borderWidth: 1,
-    borderColor: 'gray',
     width: '90%',
-    marginTop: 100,
+    marginTop: 80,
     borderRadius: 10,
     color: 'white',
     paddingVertical: 20,

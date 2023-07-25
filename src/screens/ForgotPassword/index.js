@@ -15,6 +15,7 @@ import {images} from '../../assets/images/index';
 export default function ForgotPassword({navigation}) {
   const [userName, setUserName] = useState('');
 
+  //handle submit button
   const handleForgotPassword = () => {
     console.log('submitted');
   };
@@ -23,8 +24,11 @@ export default function ForgotPassword({navigation}) {
     <SafeAreaView>
       <View style={styles.logincontainer}>
         <View style={styles.loginscreen}>
+        {/*Logo image */}
           <Image style={styles.logoimage} source={images.logo_image} />
+          <Text style={styles.title}>Forgot Password</Text>
           <View style={styles.loginform}>
+          {/*Input for username */}
             <Text style={styles.text}>Username</Text>
             <TextInput
               value={userName}
@@ -45,6 +49,7 @@ export default function ForgotPassword({navigation}) {
                 onPress={handleForgotPassword}
               />
             </View>
+            {/*Footer to go back to login page */}
             <View style={styles.forgotpasswordfooter}>
               <TouchableOpacity
                 onPress={() => navigation.goBack()}>

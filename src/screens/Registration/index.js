@@ -49,6 +49,7 @@ export default function Registeration({navigation}) {
       //password pattern
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])(?=.{8,12})$/;
   
+    //check for different conventions
     if (!passwordPattern.test(password) && !passwordPattern.test(confirmPassword)) {
       let errorMessage = "";
       if (password.length < 8 || password.length > 12) {
@@ -66,6 +67,7 @@ export default function Registeration({navigation}) {
       if (!/(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])/.test(password)) {
         errorMessage += "Password must contain at least one special character ";
       }
+      //if pattern donot match show error
   
       setConfirmPasswordError(errorMessage)
     
@@ -89,7 +91,9 @@ export default function Registeration({navigation}) {
       <View style={styles.registerationcontainer}>
         <View style={styles.registerationscreen}>
           <Image style={styles.logoimage} source={images.logo_image} />
+          <Text style={styles.title}>Make New Account</Text>
           <View style={styles.registerationform}>
+          {/* UserName input */}
             <Text style={styles.text}>Username</Text>
             <TextInput
               value={userName}
@@ -104,9 +108,11 @@ export default function Registeration({navigation}) {
               blurOnSubmit={false}
               onFocus={handleUserNameFocus}
             />
+               {/* Showing error*/}
             {!!userNameError && (
               <Text style={styles.errorText}>{userNameError}</Text>
             )}
+               {/* Password input */}
             <Text style={styles.text}>Password</Text>
             <TextInput
               value={password}
@@ -121,9 +127,11 @@ export default function Registeration({navigation}) {
               secureTextEntry
               onFocus={handlePasswordFocus}
             />
+               {/* Showing error */}
             {!!passwordError && (
               <Text style={styles.errorText}>{passwordError}</Text>
             )}
+               {/* Confirm Password input */}
             <Text style={styles.text}>Confirm Password</Text>
             <TextInput
               value={confirmPassword}
@@ -138,13 +146,15 @@ export default function Registeration({navigation}) {
               secureTextEntry
               onFocus={handleConfirmPasswordFocus}
             />
+               {/* Showing error */}
             {!!confirmPasswordError && (
               <Text style={styles.errorText}>{confirmPasswordError}</Text>
             )}
-            <View style={styles.loginbutton}>
+            <View style={styles.registerationbutton}>
               <Button title="Register" color="#0492C2" onPress={handleRegisteration} />
             </View>
-            <View style={styles.loginfooter}>
+               {/* Registeration Footer */}
+            <View style={styles.registerationfooter}>
              
               <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.footertext}>Already have an account ?</Text>

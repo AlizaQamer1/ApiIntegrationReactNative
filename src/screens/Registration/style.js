@@ -10,18 +10,23 @@ const styles = {
   
   
     },
+    title:{
+      color:"black",
+      marginLeft:10,
+      fontSize:20,
+      marginTop:30,
+      fontWeight:"bold"
+  
+    },
     registerationcontainer: {
       justifyContent: 'center',
       alignItems: 'center',
      
     },
   
-  
-  
     registerationscreen: {
      
-      borderWidth: 1,
-      borderColor: 'gray',
+  
       width: "90%",
       marginTop:50,
       marginBottom:50,
@@ -44,11 +49,11 @@ const styles = {
       height:56,
       paddingLeft:10
     },
-    loginbutton:{
+    registerationbutton:{
       marginHorizontal:10,
       marginVertical:10,
     },
-    loginfooter:{
+    registerationfooter:{
       display:"flex",
       textAlign:"right",
      justifyContent:"space-between",
