@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, {useState, useRef} from 'react';
 import styles from './style';
 import {
   View,
@@ -10,22 +10,22 @@ import {
   TouchableOpacity,
   Keyboard,
 } from 'react-native';
-import { images } from '../../assets/images/index';
+import RadioForm from 'react-native-simple-radio-button';
+import {images} from '../../assets/images/index';
 
-export default function Login({ navigation }) {
+export default function Login({navigation}) {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [userNameError, setUserNameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const userNameInputRef = useRef();
   const passwordInputRef = useRef();
+  const radioProps = [{label: 'Remember Me', value: 0}];
 
   const handleLogin = () => {
-    // Reset previous error messages
     setUserNameError('');
     setPasswordError('');
 
-    // Check for empty fields
     if (userName.trim() === '') {
       setUserNameError('Username is required.');
     }
@@ -33,7 +33,6 @@ export default function Login({ navigation }) {
     if (password.trim() === '') {
       setPasswordError('Password is required.');
     }
-    
   };
 
   const handleUserNameFocus = () => {
@@ -44,7 +43,6 @@ export default function Login({ navigation }) {
     setPasswordError('');
   };
 
-
   return (
     <SafeAreaView>
       <View style={styles.logincontainer}>
@@ -54,7 +52,7 @@ export default function Login({ navigation }) {
             <Text style={styles.text}>Username</Text>
             <TextInput
               value={userName}
-              onChangeText={(userName) => setUserName(userName)}
+              onChangeText={userName => setUserName(userName)}
               placeholder={'Enter Username'}
               style={styles.input}
               autoCapitalize="none"
@@ -65,11 +63,13 @@ export default function Login({ navigation }) {
               blurOnSubmit={false}
               onFocus={handleUserNameFocus}
             />
-            {!!userNameError && <Text style={styles.errorText}>{userNameError}</Text>}
+            {!!userNameError && (
+              <Text style={styles.errorText}>{userNameError}</Text>
+            )}
             <Text style={styles.text}>Password</Text>
             <TextInput
               value={password}
-              onChangeText={(password) => setPassword(password)}
+              onChangeText={password => setPassword(password)}
               placeholder={'Enter Password'}
               style={styles.input}
               autoCapitalize="sentences"
@@ -80,17 +80,37 @@ export default function Login({ navigation }) {
               secureTextEntry
               onFocus={handlePasswordFocus}
             />
-            {!!passwordError && <Text style={styles.errorText}>{passwordError}</Text>}
+            {!!passwordError && (
+              <Text style={styles.errorText}>{passwordError}</Text>
+            )}
             <View style={styles.loginbutton}>
               <Button title="Login" color="#0492C2" onPress={handleLogin} />
             </View>
             <View style={styles.loginfooter}>
-              <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
-                <Text style={styles.footertext}>Forgot Password?</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-                <Text style={styles.footertext}>Make New Account</Text>
-              </TouchableOpacity>
+              <View style={styles.leftfooter}>
+                <RadioForm
+                  radio_props={radioProps}
+                  initial={0}
+                  formHorizontal={false}
+                  labelHorizontal={true}
+                  buttonColor={'#2196f3'}
+                  buttonSize={15}
+                  animation={true}
+                  onPress={value => {
+                    console.log('Selected value:', value);
+                  }}
+                />
+              </View>
+              <View style={styles.rightfooter}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('ForgotPassword')}>
+                  <Text style={styles.footertext}>Forgot Password?</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Register')}>
+                  <Text style={styles.footertext}>Make New Account</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>

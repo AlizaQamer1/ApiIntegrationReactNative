@@ -45,7 +45,7 @@ export default function ForgotPassword({navigation}) {
                 onPress={handleForgotPassword}
               />
             </View>
-            <View style={styles.loginfooter}>
+            <View style={styles.forgotpasswordfooter}>
               <TouchableOpacity
                 onPress={() => navigation.goBack()}>
                 <Text style={styles.footertext}>Back To Login</Text>
