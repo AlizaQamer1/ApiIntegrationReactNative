@@ -33,9 +33,7 @@ export default function Login({ navigation }) {
     if (password.trim() === '') {
       setPasswordError('Password is required.');
     }
-
-    // Perform login logic here if needed
-    // For now, we are just displaying errors for empty fields
+    
   };
 
   const handleUserNameFocus = () => {
@@ -45,6 +43,7 @@ export default function Login({ navigation }) {
   const handlePasswordFocus = () => {
     setPasswordError('');
   };
+
 
   return (
     <SafeAreaView>
@@ -87,10 +86,10 @@ export default function Login({ navigation }) {
             </View>
             <View style={styles.loginfooter}>
               <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
-                <Text style={styles.footertext}>Forgot password ?</Text>
+                <Text style={styles.footertext}>Forgot Password?</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-                <Text style={styles.footertext}>Already have an account ?</Text>
+                <Text style={styles.footertext}>Make New Account</Text>
               </TouchableOpacity>
             </View>
           </View>

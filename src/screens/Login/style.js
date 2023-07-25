@@ -50,7 +50,6 @@ const styles = {
   loginfooter:{
     display:"flex",
     textAlign:"right",
-   justifyContent:"space-between",
    marginRight:10,
    marginTop:10,
   
