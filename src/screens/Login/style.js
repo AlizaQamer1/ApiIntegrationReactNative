@@ -61,6 +61,11 @@ const styles = {
     color:"#0492C2",
     marginTop:5,
     
+  },
+  errorText:{
+    color:"red",
+    marginLeft:10,
+    marginBottom:10
   }
 };
 
