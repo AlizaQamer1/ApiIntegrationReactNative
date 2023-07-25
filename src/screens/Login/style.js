@@ -5,13 +5,12 @@ const styles = {
     color: 'gray',
     marginLeft: 10,
   },
-  title:{
-    color:"black",
-    marginLeft:10,
-    fontSize:20,
-    marginTop:30,
-    fontWeight:"bold"
-
+  title: {
+    color: 'black',
+    marginLeft: 10,
+    fontSize: 20,
+    marginTop: 30,
+    fontWeight: 'bold',
   },
   loginform: {
     marginTop: 30,
@@ -19,20 +18,21 @@ const styles = {
   logincontainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    height: '100%',
+    backgroundColor: 'white',
   },
 
   loginscreen: {
     width: '90%',
-    marginTop: 80,
+    marginTop: 10,
     borderRadius: 10,
     color: 'white',
     paddingVertical: 20,
   },
   logoimage: {
     alignSelf: 'center',
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 140,
+    height: 150,
   },
   input: {
     borderWidth: 1,

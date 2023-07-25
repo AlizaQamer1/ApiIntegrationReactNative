@@ -1,3 +1,3 @@
 export const images = {
-    logo_image: require('../images/logo.png'),
+    logo_image: require('../images/logo2.png'),
   }
