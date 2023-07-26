@@ -1,5 +1,4 @@
 import React, {useState, useRef} from 'react';
-import styles from './style';
 import {
   View,
   Text,
@@ -11,7 +10,10 @@ import {
   Keyboard,
   ScrollView
 } from 'react-native';
+
 import {images} from '../../assets/images/index';
+import styles from './style';
+import Input from '../../components/input';
 
 export default function Registeration({navigation}) {
   const [userName, setUserName] = useState('');
@@ -86,6 +88,7 @@ export default function Registeration({navigation}) {
     setConfirmPasswordError('');
   };
   return (
+    
     <ScrollView>
     <SafeAreaView>
       <View style={styles.registerationcontainer}>
@@ -95,15 +98,12 @@ export default function Registeration({navigation}) {
           <View style={styles.registerationform}>
           {/* UserName input */}
             <Text style={styles.text}>Username</Text>
-            <TextInput
+            <Input
               value={userName}
               onChangeText={userName => setUserName(userName)}
               placeholder={'Enter Username'}
-              style={styles.input}
-              autoCapitalize="none"
               ref={userNameInputRef}
               returnKeyType="next"
-              maxLength={30}
               onSubmitEditing={() => passwordInputRef?.current?.focus()}
               blurOnSubmit={false}
               onFocus={handleUserNameFocus}
@@ -114,17 +114,15 @@ export default function Registeration({navigation}) {
             )}
                {/* Password input */}
             <Text style={styles.text}>Password</Text>
-            <TextInput
+            <Input
               value={password}
               onChangeText={password => setPassword(password)}
               placeholder={'Enter Password'}
-              style={styles.input}
-              autoCapitalize="sentences"
               ref={passwordInputRef}
-              returnKeyType="done"
+              returnKeyType="next"
               onSubmitEditing={()=>confirmPasswordInputRef?.current?.focus()}
               blurOnSubmit={false}
-              secureTextEntry
+              secureTextEntry={true}
               onFocus={handlePasswordFocus}
             />
                {/* Showing error */}
@@ -133,12 +131,10 @@ export default function Registeration({navigation}) {
             )}
                {/* Confirm Password input */}
             <Text style={styles.text}>Confirm Password</Text>
-            <TextInput
+            <Input
               value={confirmPassword}
               onChangeText={confirmPassword => setConfirmPassword(confirmPassword)}
               placeholder={'Enter Confirm Password'}
-              style={styles.input}
-              autoCapitalize="sentences"
               ref={confirmPasswordInputRef}
               returnKeyType="done"
               onSubmitEditing={Keyboard.dismiss}

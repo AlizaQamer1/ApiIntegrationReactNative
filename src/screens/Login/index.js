@@ -1,5 +1,4 @@
 import React, {useState, useRef} from 'react';
-import styles from './style';
 import {
   View,
   Text,
@@ -9,9 +8,15 @@ import {
   Button,
   TouchableOpacity,
   Keyboard,
+  KeyboardAvoidingView,
+  Platform, 
 } from 'react-native';
+
 import RadioForm from 'react-native-simple-radio-button';
+
 import {images} from '../../assets/images/index';
+import styles from './style';
+import Input from '../../components/input';
 
 export default function Login({navigation}) {
   const [userName, setUserName] = useState('');
@@ -45,57 +50,59 @@ export default function Login({navigation}) {
   };
 
   return (
+    <KeyboardAvoidingView
+    style={{ flex: 1 }}
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+  >
     <SafeAreaView>
+    
       <View style={styles.logincontainer}>
         <View style={styles.loginscreen}>
           <Image style={styles.logoimage} source={images.logo_image} />
           <Text style={styles.title}>Sign In to Continue</Text>
           <View style={styles.loginform}>
-          {/*Handling username input */}
+            {/*Handling username input */}
             <Text style={styles.text}>Username</Text>
-            <TextInput
+            <Input  
               value={userName}
               onChangeText={userName => setUserName(userName)}
               placeholder={'Enter Username'}
-              style={styles.input}
-              autoCapitalize="none"
               ref={userNameInputRef}
               returnKeyType="next"
-              maxLength={30}
               onSubmitEditing={() => passwordInputRef?.current?.focus()}
               blurOnSubmit={false}
-              onFocus={handleUserNameFocus}
-            />
-              {/*Showing error */}
+              onFocus={handleUserNameFocus}/>
+          
+            {/*Showing error */}
             {!!userNameError && (
               <Text style={styles.errorText}>{userNameError}</Text>
             )}
-              {/*Handling passwoed input */}
+
+            {/*Handling passwoed input */}
             <Text style={styles.text}>Password</Text>
-            <TextInput
-              value={password}
+            <Input  value={password}
               onChangeText={password => setPassword(password)}
               placeholder={'Enter Password'}
-              style={styles.input}
-              autoCapitalize="sentences"
               ref={passwordInputRef}
               returnKeyType="done"
               onSubmitEditing={Keyboard.dismiss}
               blurOnSubmit={false}
-              secureTextEntry
+              secureTextEntry={true}
               onFocus={handlePasswordFocus}
             />
-               {/*Showing error */}
+            {/*Showing error */}
             {!!passwordError && (
               <Text style={styles.errorText}>{passwordError}</Text>
             )}
+
             <View style={styles.loginbutton}>
               <Button title="Login" color="#0492C2" onPress={handleLogin} />
             </View>
-               {/*Login Footer */}
+
+            {/*Login Footer */}
             <View style={styles.loginfooter}>
               <View style={styles.leftfooter}>
-                 {/*Remember Me*/}
+                {/*Remember Me*/}
                 <RadioForm
                   radio_props={radioProps}
                   initial={0}
@@ -109,7 +116,8 @@ export default function Login({navigation}) {
                   }}
                 />
               </View>
-                 {/*Forgot Password and Registeration screens links */}
+
+              {/*Forgot Password and Registeration screens links */}
               <View style={styles.rightfooter}>
                 <TouchableOpacity
                   onPress={() => navigation.navigate('ForgotPassword')}>
@@ -125,5 +133,7 @@ export default function Login({navigation}) {
         </View>
       </View>
     </SafeAreaView>
+    </KeyboardAvoidingView>
+
   );
 }

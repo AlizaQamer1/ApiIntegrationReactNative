@@ -1,21 +1,13 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
-import Login from './screens/Login';
-import Registeration from './screens/Registration';
-import Forgotpassword from './screens/ForgotPassword';
+import Login from './screens/login';
+import Registeration from './screens/registration';
+import Forgotpassword from './screens/forgotPassword';
 
 const App = () => {
   return (

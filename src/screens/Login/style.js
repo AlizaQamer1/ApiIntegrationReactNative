@@ -24,7 +24,6 @@ const styles = {
 
   loginscreen: {
     width: '90%',
-    marginTop: 10,
     borderRadius: 10,
     color: 'white',
     paddingVertical: 20,
@@ -33,15 +32,6 @@ const styles = {
     alignSelf: 'center',
     width: 140,
     height: 150,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: 'gray',
-    paddingVertical: 5,
-    margin: 10,
-    borderRadius: 5,
-    height: 56,
-    paddingLeft: 10,
   },
   loginbutton: {
     marginHorizontal: 10,

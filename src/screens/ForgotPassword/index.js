@@ -1,5 +1,4 @@
 import React, {useState, useRef} from 'react';
-import styles from '../Login/style';
 import {
   View,
   Text,
@@ -8,9 +7,11 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
-  Keyboard,
 } from 'react-native';
+
 import {images} from '../../assets/images/index';
+import styles from '../Login/style';
+import Input from '../../components/input';
 
 export default function ForgotPassword({navigation}) {
   const [userName, setUserName] = useState('');
@@ -30,14 +31,11 @@ export default function ForgotPassword({navigation}) {
           <View style={styles.loginform}>
           {/*Input for username */}
             <Text style={styles.text}>Username</Text>
-            <TextInput
+            <Input
               value={userName}
               onChangeText={userName => setUserName(userName)}
               placeholder={'Enter Username'}
-              style={styles.input}
-              autoCapitalize="none"
               returnKeyType="next"
-              maxLength={30}
               blurOnSubmit={false}
             
             />
