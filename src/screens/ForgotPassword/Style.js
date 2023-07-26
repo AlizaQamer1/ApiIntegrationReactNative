@@ -12,17 +12,17 @@ const styles = {
     marginTop: 30,
     fontWeight: 'bold',
   },
-  loginform: {
+  forgotpasswordform: {
     marginTop: 30,
   },
-  logincontainer: {
+  forgotpasswordcontainer: {
     justifyContent: 'center',
     alignItems: 'center',
     height: '100%',
     backgroundColor: 'white',
   },
 
-  loginscreen: {
+  forgotpasswordscreen: {
     width: '90%',
     borderRadius: 10,
     color: 'white',
@@ -33,24 +33,13 @@ const styles = {
     width: 140,
     height: 150,
   },
-  loginfooter: {
-    marginTop: 10,
-  },
-  leftfooter: {
-    marginTop: 5,
-    marginLeft: 10,
-  },
+
   forgotpasswordfooter: {
     display: 'flex',
     textAlign: 'right',
     marginRight: 10,
   },
-  rightfooter: {
-    display: 'flex',
-    textAlign: 'bottom',
-    marginRight: 10,
-    marginBottom: 0,
-  },
+
   footertext: {
     textAlign: 'right',
     fontWeight: 'bold',
