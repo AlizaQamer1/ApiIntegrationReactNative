@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text, FlatList} from 'react-native';
+import {View, Text, FlatList, Button, Alert} from 'react-native';
 
 import Title from '../../components/Title';
 import styles from './Style';
+import { storage } from '../../Storage';
 export default function Home() {
   const List = [
     {
@@ -38,8 +39,17 @@ export default function Home() {
       key: 8,
     },
   ];
+
+  const token=storage.getString("token")
+token?
+  Alert.alert(token)
+  :null
+  
+
   return (
     <View>
+    <Button title="logout" onPress={()=>storage.delete("token")}/>
+   
       <Title title={'Quotations That Inspire'} />
       <FlatList
         data={List}

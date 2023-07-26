@@ -1,19 +1,13 @@
-import React, { useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, {useState} from 'react';
 
 import HomeStack from './Navigation/HomeStack';
 import AutheticationStack from './Navigation/AuthenticationStack';
+import {storage} from './Storage';
+
+const token = storage.getString('token');
 
 const App = () => {
-  
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
-
-  return (
-    <NavigationContainer>
-    
-      {isAuthenticated ? <HomeStack /> : <AutheticationStack />}
-    </NavigationContainer>
-  );
+  return <>{token ? <HomeStack /> : <AutheticationStack />}</>;
 };
 
 export default App;

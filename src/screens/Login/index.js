@@ -1,11 +1,9 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useContext} from 'react';
 import {
   View,
   Text,
   Image,
   SafeAreaView,
-  TextInput,
-  Button,
   TouchableOpacity,
   Keyboard,
   KeyboardAvoidingView,
@@ -18,9 +16,11 @@ import {images} from '../../assets/images/index';
 import styles from './style';
 import Input from '../../components/input';
 import Buttoncomponent from '../../components/button';
+import { storage } from '../../Storage';
+import { loginUser } from '../../helpers/PostApi';
 
 export default function Login({navigation}) {
-  const [userName, setUserName] = useState('');
+  const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [userNameError, setUserNameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -28,17 +28,37 @@ export default function Login({navigation}) {
   const passwordInputRef = useRef();
   const radioProps = [{label: 'Remember Me', value: 0}];
 
-  const handleLogin = () => {
+
+  const handleLogin = async event => {
     setUserNameError('');
     setPasswordError('');
+    event.preventDefault();
 
-    //handle error if username and password input is null
-    if (userName.trim() === '') {
-      setUserNameError('Username is required.');
+    // Check if both fields have values
+    if (!username.trim() || !password.trim()) {
+      if (username.trim() === '') {
+        setUserNameError('Username is required.');
+      }
+      if (password.trim() === '') {
+        setPasswordError('Password is required.');
+      }
+      return;
     }
 
-    if (password.trim() === '') {
-      setPasswordError('Password is required.');
+    try {
+      const data = await loginUser(username, password);
+
+      if (data.token) {
+        storage.set('token', JSON.stringify(data.token));
+        storage.set('id', JSON.stringify(data.id));
+
+        // setIsAuthenticated(true);
+        // navigation.navigate('Home');
+      } else {
+        setPasswordError('Username or password incorrect');
+      }
+    } catch (error) {
+      setPasswordError('Username or password incorrect');
     }
   };
 
@@ -63,7 +83,7 @@ export default function Login({navigation}) {
               {/*Handling username input */}
               <Text style={styles.text}>Username</Text>
               <Input
-                value={userName}
+                value={username}
                 onChangeText={userName => setUserName(userName)}
                 placeholder={'Enter Username'}
                 ref={userNameInputRef}
