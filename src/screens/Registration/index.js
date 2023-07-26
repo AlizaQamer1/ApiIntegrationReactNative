@@ -8,12 +8,13 @@ import {
   Button,
   TouchableOpacity,
   Keyboard,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 
 import {images} from '../../assets/images/index';
 import styles from './style';
 import Input from '../../components/input';
+import Buttoncomponent from '../../components/button';
 
 export default function Registeration({navigation}) {
   const [userName, setUserName] = useState('');
@@ -44,35 +45,38 @@ export default function Registeration({navigation}) {
       setConfirmPasswordError('Confirm Password is required.');
     }
 
-    if (password!==confirmPassword) {
-        setConfirmPasswordError('Password and Confirm Password should be same.');
-      }
+    if (password !== confirmPassword) {
+      setConfirmPasswordError('Password and Confirm Password should be same.');
+    }
 
-      //password pattern
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])(?=.{8,12})$/;
-  
+    //password pattern
+    const passwordPattern =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])(?=.{8,12})$/;
+
     //check for different conventions
-    if (!passwordPattern.test(password) && !passwordPattern.test(confirmPassword)) {
-      let errorMessage = "";
+    if (
+      !passwordPattern.test(password) &&
+      !passwordPattern.test(confirmPassword)
+    ) {
+      let errorMessage = '';
       if (password.length < 8 || password.length > 12) {
-        errorMessage += "Password must be 8-12 characters long ";
+        errorMessage += 'Password must be 8-12 characters long ';
       }
       if (!/(?=.*[a-z])/.test(password)) {
-        errorMessage += "Password must contain at least one lowercase letter ";
+        errorMessage += 'Password must contain at least one lowercase letter ';
       }
       if (!/(?=.*[A-Z])/.test(password)) {
-        errorMessage += "Password must contain at least one uppercase letter ";
+        errorMessage += 'Password must contain at least one uppercase letter ';
       }
       if (!/(?=.*\d)/.test(password)) {
-        errorMessage += "Password must contain at least one digit ";
+        errorMessage += 'Password must contain at least one digit ';
       }
       if (!/(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])/.test(password)) {
-        errorMessage += "Password must contain at least one special character ";
+        errorMessage += 'Password must contain at least one special character ';
       }
       //if pattern donot match show error
-  
-      setConfirmPasswordError(errorMessage)
-    
+
+      setConfirmPasswordError(errorMessage);
     }
   };
 
@@ -88,78 +92,82 @@ export default function Registeration({navigation}) {
     setConfirmPasswordError('');
   };
   return (
-    
     <ScrollView>
-    <SafeAreaView>
-      <View style={styles.registerationcontainer}>
-        <View style={styles.registerationscreen}>
-          <Image style={styles.logoimage} source={images.logo_image} />
-          <Text style={styles.title}>Make New Account</Text>
-          <View style={styles.registerationform}>
-          {/* UserName input */}
-            <Text style={styles.text}>Username</Text>
-            <Input
-              value={userName}
-              onChangeText={userName => setUserName(userName)}
-              placeholder={'Enter Username'}
-              ref={userNameInputRef}
-              returnKeyType="next"
-              onSubmitEditing={() => passwordInputRef?.current?.focus()}
-              blurOnSubmit={false}
-              onFocus={handleUserNameFocus}
-            />
-               {/* Showing error*/}
-            {!!userNameError && (
-              <Text style={styles.errorText}>{userNameError}</Text>
-            )}
-               {/* Password input */}
-            <Text style={styles.text}>Password</Text>
-            <Input
-              value={password}
-              onChangeText={password => setPassword(password)}
-              placeholder={'Enter Password'}
-              ref={passwordInputRef}
-              returnKeyType="next"
-              onSubmitEditing={()=>confirmPasswordInputRef?.current?.focus()}
-              blurOnSubmit={false}
-              secureTextEntry={true}
-              onFocus={handlePasswordFocus}
-            />
-               {/* Showing error */}
-            {!!passwordError && (
-              <Text style={styles.errorText}>{passwordError}</Text>
-            )}
-               {/* Confirm Password input */}
-            <Text style={styles.text}>Confirm Password</Text>
-            <Input
-              value={confirmPassword}
-              onChangeText={confirmPassword => setConfirmPassword(confirmPassword)}
-              placeholder={'Enter Confirm Password'}
-              ref={confirmPasswordInputRef}
-              returnKeyType="done"
-              onSubmitEditing={Keyboard.dismiss}
-              blurOnSubmit={false}
-              secureTextEntry
-              onFocus={handleConfirmPasswordFocus}
-            />
-               {/* Showing error */}
-            {!!confirmPasswordError && (
-              <Text style={styles.errorText}>{confirmPasswordError}</Text>
-            )}
-            <View style={styles.registerationbutton}>
-              <Button title="Register" color="#0492C2" onPress={handleRegisteration} />
-            </View>
-               {/* Registeration Footer */}
-            <View style={styles.registerationfooter}>
-             
-              <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.footertext}>Already have an account ?</Text>
-              </TouchableOpacity>
+      <SafeAreaView>
+        <View style={styles.registerationcontainer}>
+          <View style={styles.registerationscreen}>
+            <Image style={styles.logoimage} source={images.logo_image} />
+            <Text style={styles.title}>Make New Account</Text>
+            <View style={styles.registerationform}>
+              {/* UserName input */}
+              <Text style={styles.text}>Username</Text>
+              <Input
+                value={userName}
+                onChangeText={userName => setUserName(userName)}
+                placeholder={'Enter Username'}
+                ref={userNameInputRef}
+                returnKeyType="next"
+                onSubmitEditing={() => passwordInputRef?.current?.focus()}
+                blurOnSubmit={false}
+                onFocus={handleUserNameFocus}
+              />
+              {/* Showing error*/}
+              {!!userNameError && (
+                <Text style={styles.errorText}>{userNameError}</Text>
+              )}
+              {/* Password input */}
+              <Text style={styles.text}>Password</Text>
+              <Input
+                value={password}
+                onChangeText={password => setPassword(password)}
+                placeholder={'Enter Password'}
+                ref={passwordInputRef}
+                returnKeyType="next"
+                onSubmitEditing={() =>
+                  confirmPasswordInputRef?.current?.focus()
+                }
+                blurOnSubmit={false}
+                secureTextEntry={true}
+                onFocus={handlePasswordFocus}
+              />
+              {/* Showing error */}
+              {!!passwordError && (
+                <Text style={styles.errorText}>{passwordError}</Text>
+              )}
+              {/* Confirm Password input */}
+              <Text style={styles.text}>Confirm Password</Text>
+              <Input
+                value={confirmPassword}
+                onChangeText={confirmPassword =>
+                  setConfirmPassword(confirmPassword)
+                }
+                placeholder={'Enter Confirm Password'}
+                ref={confirmPasswordInputRef}
+                returnKeyType="done"
+                onSubmitEditing={Keyboard.dismiss}
+                blurOnSubmit={false}
+                secureTextEntry
+                onFocus={handleConfirmPasswordFocus}
+              />
+              {/* Showing error */}
+              {!!confirmPasswordError && (
+                <Text style={styles.errorText}>{confirmPasswordError}</Text>
+              )}
+
+              <Buttoncomponent title="Register" onPress={handleRegisteration} />
+
+              {/* Registeration Footer */}
+              <View style={styles.registerationfooter}>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                  <Text style={styles.footertext}>
+                    Already have an account ?
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
     </ScrollView>
   );
 }

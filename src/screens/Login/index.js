@@ -17,6 +17,7 @@ import RadioForm from 'react-native-simple-radio-button';
 import {images} from '../../assets/images/index';
 import styles from './style';
 import Input from '../../components/input';
+import Buttoncomponent from '../../components/button';
 
 export default function Login({navigation}) {
   const [userName, setUserName] = useState('');
@@ -95,9 +96,11 @@ export default function Login({navigation}) {
               <Text style={styles.errorText}>{passwordError}</Text>
             )}
 
-            <View style={styles.loginbutton}>
+            {/* <View style={styles.loginbutton}>
               <Button title="Login" color="#0492C2" onPress={handleLogin} />
-            </View>
+            </View> */}
+            <Buttoncomponent title="Login" onPress={handleLogin}/>
+            
 
             {/*Login Footer */}
             <View style={styles.loginfooter}>

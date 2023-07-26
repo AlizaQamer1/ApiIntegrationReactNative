@@ -8,11 +8,26 @@ const Stack = createNativeStackNavigator();
 import Login from './screens/login';
 import Registeration from './screens/registration';
 import Forgotpassword from './screens/forgotPassword';
+import Home from './screens/home';
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login" >
+      <Stack.Navigator initialRouteName="Home" >
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{
+          title: 'Home', 
+          headerStyle: {
+            backgroundColor: '#52B2BF', 
+          },
+          headerTintColor: '#fff', 
+          headerTitleStyle: {
+            fontWeight: 'bold', 
+          },
+        }}
+      />
       <Stack.Screen
         name="Login"
         component={Login}

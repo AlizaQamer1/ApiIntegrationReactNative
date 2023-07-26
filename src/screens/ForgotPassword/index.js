@@ -12,6 +12,7 @@ import {
 import {images} from '../../assets/images/index';
 import styles from '../Login/style';
 import Input from '../../components/input';
+import Buttoncomponent from '../../components/button';
 
 export default function ForgotPassword({navigation}) {
   const [userName, setUserName] = useState('');
@@ -39,14 +40,11 @@ export default function ForgotPassword({navigation}) {
               blurOnSubmit={false}
             
             />
-
-            <View style={styles.loginbutton}>
-              <Button
+              <Buttoncomponent
                 title="Send"
-                color="#0492C2"
                 onPress={handleForgotPassword}
               />
-            </View>
+         
             {/*Footer to go back to login page */}
             <View style={styles.forgotpasswordfooter}>
               <TouchableOpacity

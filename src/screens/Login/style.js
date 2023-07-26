@@ -33,10 +33,6 @@ const styles = {
     width: 140,
     height: 150,
   },
-  loginbutton: {
-    marginHorizontal: 10,
-    marginVertical: 10,
-  },
   loginfooter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
