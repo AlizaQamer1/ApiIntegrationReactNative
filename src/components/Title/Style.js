@@ -6,6 +6,8 @@ const styles = {
     textAlign: 'left',
     paddingTop: 10,
     color: '#103E5B',
+    marginHorizontal:10,
+    marginVertical:10,
     textTransform: 'capitalize',
     fontFamily: 'Roboto-Black',
   },

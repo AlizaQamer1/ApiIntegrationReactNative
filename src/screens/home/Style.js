@@ -1,17 +1,25 @@
 const styles = {
-  GridViewBlockStyle: {
+  homecontainer:{
+    backgroundColor:"rgb(247, 247, 247)"
+
+  },
+  Gridcontainer: {
     justifyContent: 'center',
     flex: 1,
-    alignItems: 'center',
-    height: 100,
+    alignItems: 'left',
     margin: 5,
-    backgroundColor: 'pink',
+    borderWidth:1,
+    borderColor:"#ccc",
+    marginHorizontal:10,
+    borderRadius:5,
+    backgroundColor: 'white',
   },
-  GridViewInsideTextItemStyle: {
-    color: '#fff',
+  Griditem: {
+    color: 'black',
     padding: 10,
-    fontSize: 18,
-    justifyContent: 'center',
+    fontSize: 16,
+    justifyContent:"center",
+    lineHeight:26
   },
 };
 
