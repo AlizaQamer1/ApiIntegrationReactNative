@@ -1,13 +1,9 @@
 const styles={
-    category:{
-        flex:1,
-        backgroundColor:"white",
-        marginBottom:70
-
-    },
+  
     categorycontainer:{
        backgroundColor:"white",
-       padding:10
+       padding:10,
+       marginBottom:180
     },
     list:{
         justifyContent: 'center',

@@ -1,12 +1,9 @@
 const styles={
-    listing:{
-        flex:1,
-        backgroundColor:"white",
-        marginBotton:70
-    },
+   
     listingcontainer:{
         backgroundColor:"white",
-        marginTop:10
+        marginTop:10,
+        marginBottom:100
         
     },
     list:{
@@ -23,19 +20,33 @@ const styles={
        lineHeight:20,
         padding:10,
         color:"black",
-        fontSize:14
+        fontSize:16
       
     },
     heading:{
         fontWeight:500,
-        fontSize:18
+        fontSize:18,
+        lineHeight:26
 
     },
     image:{
         width:"100%",
-        height:300
+        height:300,
+        borderRadius:30,
+    },
+    starcontainer:{
+        padding:10,
+        flexDirection:"row"
+    },
+    pricecontainer:{
+        flexDirection:"row"
+    },
+    price:{
+        textDecorationLine: 'line-through',
+    },
+    discountedprice:{
+        color:"red"
     }
-
 }
 
 export default styles

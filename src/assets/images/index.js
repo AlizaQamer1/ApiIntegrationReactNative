@@ -21,7 +21,6 @@ export const images = {
     womenshoes: require('../images/womenshoes.jpg'),
     womenwatches: require('../images/womenwatches.jpg'),
     automotive: require('../images/automotive.jpg'),
-    fillestart:require("../images/filledstart.png"),
-    unfilledstart:require("../images/unfilledstar.png")
+ 
   }
   
