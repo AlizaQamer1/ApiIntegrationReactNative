@@ -12,7 +12,7 @@ import { productcategories } from '../../../helpers/GetApi';
 
 
 export default function ProductCategories() {
-  const [productCategory, setProductCategory] = useState([]);
+  const [productCategory, setProductCategory] = useState();
   const navigation = useNavigation();
 
   useEffect(() => {
