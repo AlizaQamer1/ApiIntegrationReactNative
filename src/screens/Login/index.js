@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Keyboard,
   KeyboardAvoidingView,
-  Platform,
+  ActivityIndicator,
 } from 'react-native';
 
 import RadioForm from 'react-native-simple-radio-button';
@@ -16,18 +16,18 @@ import {images} from '../../assets/images/index';
 import styles from './style';
 import Input from '../../components/input';
 import Buttoncomponent from '../../components/button';
-import { storage } from '../../Storage';
-import { loginUser } from '../../helpers/PostApi';
+import {storage} from '../../Storage';
+import {loginUser} from '../../helpers/PostApi';
 
 export default function Login({navigation}) {
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [userNameError, setUserNameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [isloading, setIsLoading] = useState(false);
   const userNameInputRef = useRef();
   const passwordInputRef = useRef();
   const radioProps = [{label: 'Remember Me', value: 0}];
-
 
   const handleLogin = async event => {
     setUserNameError('');
@@ -46,14 +46,14 @@ export default function Login({navigation}) {
     }
 
     try {
+      setIsLoading(true);
       const data = await loginUser(username, password);
 
       if (data.token) {
         storage.set('token', JSON.stringify(data.token));
         storage.set('id', JSON.stringify(data.id));
 
-        // setIsAuthenticated(true);
-        // navigation.navigate('Home');
+        navigation.replace('HomeStack');
       } else {
         setPasswordError('Username or password incorrect');
       }
@@ -71,12 +71,10 @@ export default function Login({navigation}) {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{flex: 1}}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <SafeAreaView>
-        <View style={styles.logincontainer}>
-          <View style={styles.loginscreen}>
+    <SafeAreaView>
+      <View style={styles.logincontainer}>
+        <View style={styles.loginscreen}>
+          <KeyboardAvoidingView enabled>
             <Image style={styles.logoimage} source={images.logo_image} />
             <Text style={styles.title}>Sign In to Continue</Text>
             <View style={styles.loginform}>
@@ -116,10 +114,12 @@ export default function Login({navigation}) {
                 <Text style={styles.errorText}>{passwordError}</Text>
               )}
 
-              {/* <View style={styles.loginbutton}>
-              <Button title="Login" color="#0492C2" onPress={handleLogin} />
-            </View> */}
-              <Buttoncomponent title="Login" onPress={handleLogin} />
+              <Buttoncomponent
+                title="Login"
+                onPress={handleLogin}
+                buttonColor={isloading ? 'lightblue' : '#0492C2'}
+                isLoading={isloading} // Pass the isLoading prop
+              />
 
               {/*Login Footer */}
               <View style={styles.loginfooter}>
@@ -148,9 +148,9 @@ export default function Login({navigation}) {
                 </View>
               </View>
             </View>
-          </View>
+          </KeyboardAvoidingView>
         </View>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+      </View>
+    </SafeAreaView>
   );
 }

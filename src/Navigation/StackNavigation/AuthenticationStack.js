@@ -3,15 +3,16 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import Login from '../screens/login';
-import Registeration from '../screens/registration';
-import ForgotPassword from '../screens/forgotPassword';
+
+import Registeration from '../../screens/registration';
+import ForgotPassword from '../../screens/forgotPassword';
+import Login from '../../screens/login';
 
 const Stack = createNativeStackNavigator();
 
 const AutheticationStack = () => {
   return (
-    <NavigationContainer>
+ 
       <Stack.Navigator initialRouteName="Login" >
       <Stack.Screen
         name="Login"
@@ -57,7 +58,7 @@ const AutheticationStack = () => {
         }}
       />
       </Stack.Navigator>
-    </NavigationContainer>
+   
   );
 };
 

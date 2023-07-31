@@ -1,60 +1,83 @@
-import React,{useState,useEffect} from 'react';
-import {View, Text, FlatList, Button, Alert} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, Button, ActivityIndicator } from 'react-native';
 
 import Title from '../../components/Title';
 import styles from './Style';
-import {storage} from '../../Storage';
-import {useNavigation} from '@react-navigation/native';
-import { quotations } from '../../helpers/PostApi';
+import { storage } from '../../Storage';
+import { useNavigation } from '@react-navigation/native';
+import { quotations } from '../../helpers/GetApi';
+import HomeSkeleton from '../../skeleton/homeSkeleton';
+
 
 export default function Home() {
   const [quotes, setQuotes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   const fetchData = async () => {
     try {
-      const data = await quotations();
-      setQuotes(data);
+      const data = await quotations(currentPage);
+      if (currentPage === 1) {
+        setQuotes(data);
+      } else {
+        setQuotes((prevQuotes) => [...prevQuotes, ...data]);
+      }
+      setIsLoading(false);
     } catch (error) {
-      console.error("Error fetching quotes:", error);
+      console.error('Error fetching quotes:', error);
     }
   };
 
-  const List = [
-    {
-      name: 'Contents in this project Simple Custom GridView Layout Tutorial ',
-      key: 1,
-    },
-  
-    
-  ];
-
   const token = storage.getString('token');
-  token ? Alert.alert(token) : null;
-
   const navigation = useNavigation();
+
   const buttonPress = () => {
     storage.delete('token');
-    navigation.navigate('AutheticationStack', {screen: 'Login'});
+    navigation.replace('AuthStack');
+  };
+
+  const handleLoadMore = () => {
+    if (!isLoading) {
+      setCurrentPage((prevPage) => prevPage + 1);
+      setIsLoading(true);
+    }
+  };
+
+  const renderItem = ({ item }) => (
+    <View style={styles.Gridcontainer}>
+      <Text style={styles.Griditem}>{item.quote}</Text>
+    </View>
+  );
+
+  const renderFooter = () => {
+    if (isLoading) {
+      return <ActivityIndicator size="large" color="black" />;
+    }else{
+      return <Text>No More Quotes to show</Text>
+    }
+    return null;
   };
 
   return (
     <View style={styles.homecontainer}>
       <Button title="logout" onPress={buttonPress} />
-
       <Title title={'Quotations That Inspire'} />
+      {quotes.length>0 ?
       <FlatList
         data={quotes}
-        renderItem={({item}) => (
-          <View style={styles.Gridcontainer}>
-            <Text style={styles.Griditem}>{item.quote}</Text>
-          </View>
-        )}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id.toString()}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.2}
+        ListFooterComponent={renderFooter}
       />
+      :
+      <HomeSkeleton/>
+      }
     </View>
   );
 }

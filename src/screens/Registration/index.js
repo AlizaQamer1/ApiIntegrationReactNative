@@ -4,8 +4,7 @@ import {
   Text,
   Image,
   SafeAreaView,
-  TextInput,
-  Button,
+  KeyboardAvoidingView,
   TouchableOpacity,
   Keyboard,
   ScrollView,
@@ -96,6 +95,7 @@ export default function Registeration({navigation}) {
       <SafeAreaView>
         <View style={styles.registerationcontainer}>
           <View style={styles.registerationscreen}>
+          <KeyboardAvoidingView enabled>
             <Image style={styles.logoimage} source={images.logo_image} />
             <Text style={styles.title}>Make New Account</Text>
             <View style={styles.registerationform}>
@@ -154,7 +154,8 @@ export default function Registeration({navigation}) {
                 <Text style={styles.errorText}>{confirmPasswordError}</Text>
               )}
 
-              <Buttoncomponent title="Register" onPress={handleRegisteration} />
+              <Buttoncomponent  buttonColor= '#0492C2'
+              title="Register" onPress={handleRegisteration} />
 
               {/* Registeration Footer */}
               <View style={styles.registerationfooter}>
@@ -165,6 +166,7 @@ export default function Registeration({navigation}) {
                 </TouchableOpacity>
               </View>
             </View>
+            </KeyboardAvoidingView>
           </View>
         </View>
       </SafeAreaView>

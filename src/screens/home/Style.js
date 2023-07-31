@@ -1,25 +1,27 @@
 const styles = {
-  homecontainer:{
-    backgroundColor:"rgb(247, 247, 247)"
-
+  homecontainer: {
+    backgroundColor: 'rgb(247, 247, 247)',
+    marginBottom:100
   },
   Gridcontainer: {
     justifyContent: 'center',
     flex: 1,
     alignItems: 'left',
     margin: 5,
-    borderWidth:1,
-    borderColor:"#ccc",
-    marginHorizontal:10,
-    borderRadius:5,
+    marginHorizontal: 10,
     backgroundColor: 'white',
+  
   },
   Griditem: {
     color: 'black',
     padding: 10,
     fontSize: 16,
-    justifyContent:"center",
-    lineHeight:26
+    borderWidth: 1,
+    borderColor: '#ccc',
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    lineHeight: 26,
+    borderRadius: 15,
   },
 };
 

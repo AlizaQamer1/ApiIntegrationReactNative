@@ -62,6 +62,9 @@ const styles = {
     marginLeft: 10,
     marginBottom: 10,
   },
+  loading:{
+   width:50
+  }
 };
 
 export default styles;

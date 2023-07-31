@@ -15,15 +15,3 @@ export const loginUser = async (username, password) => {
   }
 };
 
-export const quotations = async (currentPage) => {
-    try {
-      const limit = 10;
-      const skip = (currentPage - 1) * limit;
-  
-      const response = await axios.get(`${BASE_URL}/quotes`);
-      return response.data.quotes; 
-    } catch (error) {
-      console.error('Error:', error);
-      throw error; 
-    }
-  };
