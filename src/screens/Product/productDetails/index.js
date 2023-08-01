@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, ScrollView, Image, TouchableOpacity} from 'react-native';
+import {View, Text, ScrollView, Image, TouchableOpacity,ActivityIndicator} from 'react-native';
 import {Rating} from 'react-native-ratings';
 import { useRoute } from '@react-navigation/native';
 
@@ -45,6 +45,7 @@ export default function ProductDetail() {
       setCurrentImageIndex(prevIndex => prevIndex - 1);
     }
   };
+  
   
 
   return (

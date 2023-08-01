@@ -2,7 +2,8 @@ const styles={
    
     listingcontainer:{
       
-        marginTop:10,
+       
+        backgroundColor:"white",
         marginBottom:100
         
     },
@@ -12,7 +13,8 @@ const styles={
         borderColor:"gray",
         borderRadius:30,
         marginHorizontal:16,
-        marginVertical:20
+        marginVertical:20,
+        backgroundColor:"white"
        
     },
     listitem:{
@@ -36,7 +38,8 @@ const styles={
     },
     starcontainer:{
         padding:10,
-        flexDirection:"row"
+        flexDirection:"row",
+
     },
     pricecontainer:{
         flexDirection:"row"

@@ -7,10 +7,12 @@ import Home from '../../screens/home';
 import ProductCategories from '../../screens/Product/productCategories';
 import ProductListing from '../../screens/Product/productListing';
 import ProductDetail from '../../screens/Product/productDetails';
+import PostListing from '../../screens/Post/postListing';
+import PostDetail from '../../screens/Post/postDetail';
 
 const HomeStack = ({navigation}) => {
   return (
-    <Stack.Navigator initialRouteName="productCategory">
+    <Stack.Navigator initialRouteName="postListing">
       <Stack.Screen
         name="Home"
         component={Home}
@@ -60,6 +62,34 @@ const HomeStack = ({navigation}) => {
         component={ProductDetail}
         options={{
           title: 'Product Details',
+          headerStyle: {
+            backgroundColor: '#0492C2',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      />
+        <Stack.Screen
+        name="postListing"
+        component={PostListing}
+        options={{
+          title: 'Post Listing',
+          headerStyle: {
+            backgroundColor: '#0492C2',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      />
+        <Stack.Screen
+        name="postDetail"
+        component={PostDetail}
+        options={{
+          title: 'Post Details',
           headerStyle: {
             backgroundColor: '#0492C2',
           },

@@ -74,7 +74,8 @@ const styles = {
     color: 'red',
   },
   starcontainer:{
-    paddingTop:8
+    
+    padding:10
   }
 };
 
