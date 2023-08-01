@@ -47,13 +47,15 @@ export const productcategories = async () => {
     }
   };
   
-
-  export const productdetail = async () => {
+ 
+  
+  // Modify the productdetail function to accept the product ID as an argument
+  export const productdetail = async (productId) => {
     try {
-      const response = await axios.get(`${BASE_URL}/products/2`);
+      const response = await axios.get(`${BASE_URL}/products/${productId}`);
       return response.data;
     } catch (error) {
-      console.error('Error fetching products:', error);
+      console.error('Error fetching product detail:', error);
       throw error;
     }
   };

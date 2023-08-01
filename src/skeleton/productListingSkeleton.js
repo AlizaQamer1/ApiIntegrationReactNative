@@ -1,5 +1,5 @@
 import React from 'react'
-import ContentLoader from 'react-content-loader/native'
+import ContentLoader, {Rect} from 'react-content-loader/native'
 
 const ProductListingSkeleton = () => {
   return (
@@ -12,7 +12,7 @@ const ProductListingSkeleton = () => {
       foregroundColor="#ededed"
  
     >
-      <rect x="50" y="6" rx="4" ry="4" width="343" height="38" />
+      <Rect x="50" y="6" rx="4" ry="4" width="343" height="38" />
       
     </ContentLoader>
   )

@@ -10,7 +10,7 @@ import ProductDetail from '../../screens/Product/productDetails';
 
 const HomeStack = ({navigation}) => {
   return (
-    <Stack.Navigator initialRouteName="productDetail">
+    <Stack.Navigator initialRouteName="productCategory">
       <Stack.Screen
         name="Home"
         component={Home}

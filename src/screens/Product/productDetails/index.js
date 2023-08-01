@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, ScrollView, Image, TouchableOpacity} from 'react-native';
 import {Rating} from 'react-native-ratings';
-import {  Icon } from 'react-native-elements';
+import { useRoute } from '@react-navigation/native';
+
 
 
 import styles from './Style';
@@ -11,34 +12,39 @@ import { images } from '../../../assets/images';
 export default function ProductDetail() {
   const [productDetails, setProductDetails] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const route = useRoute();
 
-  
 
   useEffect(() => {
-    fetchProductDetails();
+    fetchProductDetail();
   }, []);
 
-  const fetchProductDetails = async () => {
+  const fetchProductDetail = async () => {
     try {
-      const data = await productdetail();
+      const { product } = route.params || {};
+      if (!product) {
+        console.error('No product selected.');
+        return;
+      }
+      const data = await productdetail(product.id); 
       setProductDetails(data);
     } catch (error) {
-      console.error('Error fetching ProductDetails:', error);
+      console.error('Error fetching Product Detail:', error.message);
     }
   };
 
+  
   const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex < productDetails.images.length - 1 ? prevIndex + 1 : prevIndex
-    );
+    if (productDetails.images && currentImageIndex < productDetails.images.length - 1) {
+      setCurrentImageIndex(prevIndex => prevIndex + 1);
+    }
   };
 
   const handlePreviousImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 1 : prevIndex
-    );
+    if (productDetails.images && currentImageIndex > 0) {
+      setCurrentImageIndex(prevIndex => prevIndex - 1);
+    }
   };
-  
   
 
   return (
@@ -46,7 +52,15 @@ export default function ProductDetail() {
     <View style={styles.detail}>
   
       <View style={styles.list}>
-      <Image style={styles.image} source={{uri: productDetails.images[currentImageIndex]}} />
+      {productDetails.images && productDetails.images.length > 0 ? (
+            <Image
+              style={styles.image}
+              source={{ uri: productDetails.images[currentImageIndex] }}
+            />
+          ) : (
+            <Text>No image available</Text> 
+          )}
+          
       <View style={styles.icons}>
     <TouchableOpacity onPress={handlePreviousImage}>
         <Image style={styles.icon} source={images.righticon}/>
