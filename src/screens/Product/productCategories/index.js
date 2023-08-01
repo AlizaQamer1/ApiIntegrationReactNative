@@ -13,6 +13,7 @@ import { productcategories } from '../../../helpers/GetApi';
 
 export default function ProductCategories() {
   const [productCategory, setProductCategory] = useState();
+  const [loading,setLoading]=useState(true)
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -22,6 +23,7 @@ export default function ProductCategories() {
   const fetchProductCategories = async () => {
     try {
       const data = await productcategories();
+      setLoading(false)
       setProductCategory(data);
     } catch (error) {
       console.error('Error fetching ProductCategories:', error);
@@ -57,14 +59,15 @@ export default function ProductCategories() {
   };
 
   return (
-    <View style={styles.category}>
+    <View style={{backgroundColor:"white"}}>
       <Title title="Available Products On Our Store" />
       <View style={styles.categorycontainer}>
         <FlatList
+      
           data={productCategory}
           renderItem={({ item, index }) => (
             <View style={styles.list}>
-              {item ? ( 
+              {!loading ? ( 
                 <>
                   <TouchableOpacity onPress={() => handleItemPress(item)}>
                     <Image style={styles.image} source={productImages[index]} />

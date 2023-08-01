@@ -49,7 +49,7 @@ export default function ProductDetail() {
 
   return (
     <ScrollView>
-    <View style={styles.detail}>
+    <View style={{backgroundColor:"white"}}>
   
       <View style={styles.list}>
       {productDetails.images && productDetails.images.length > 0 ? (

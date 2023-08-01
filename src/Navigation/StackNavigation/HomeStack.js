@@ -29,6 +29,7 @@ const HomeStack = ({navigation}) => {
         name="productCategory"
         component={ProductCategories}
         options={{
+          // headerShown: false,
           title: 'Product Categories',
           headerStyle: {
             backgroundColor: '#0492C2',
@@ -44,6 +45,7 @@ const HomeStack = ({navigation}) => {
         component={ProductListing}
         options={{
           title: 'Product Listing',
+          
           headerStyle: {
             backgroundColor: '#0492C2',
           },

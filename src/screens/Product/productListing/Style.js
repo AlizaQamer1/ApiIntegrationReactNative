@@ -1,17 +1,17 @@
 const styles={
    
     listingcontainer:{
-        backgroundColor:"white",
+      
         marginTop:10,
         marginBottom:100
         
     },
     list:{
-        padding:10,
+        padding:15,
         borderWidth:1,
         borderColor:"gray",
         borderRadius:30,
-        marginHorizontal:40,
+        marginHorizontal:16,
         marginVertical:20
        
     },

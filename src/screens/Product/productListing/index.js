@@ -1,3 +1,4 @@
+
 import React, {useState, useEffect} from 'react';
 import {View, Text, FlatList, Image, TouchableOpacity} from 'react-native';
 import {Rating} from 'react-native-ratings';
@@ -7,6 +8,7 @@ import styles from './Style';
 import Title from '../../../components/Title';
 import {productlisting} from '../../../helpers/GetApi';
 import ProductListingSkeleton from '../../../skeleton/productListingSkeleton';
+
 
 export default function ProductListing() {
   const [productListing, setProductListing] = useState();
@@ -28,7 +30,6 @@ export default function ProductListing() {
 
       if (!category) {
         console.error('No category selected.');
-
         return;
       }
 
@@ -42,7 +43,11 @@ export default function ProductListing() {
   };
 
   const renderList = ({item, index}) => {
-    return !loading ? (
+    if (loading) {
+      return <ProductListingSkeleton />;
+    }
+
+    return (
       <View style={styles.list}>
         <TouchableOpacity onPress={() => handleProductClick(item)}>
           <Image style={styles.image} source={{uri: item.thumbnail}} />
@@ -69,8 +74,6 @@ export default function ProductListing() {
           </View>
         </TouchableOpacity>
       </View>
-    ) : (
-      <ProductListingSkeleton />
     );
   };
 

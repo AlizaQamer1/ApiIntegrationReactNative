@@ -7,7 +7,7 @@ const styles = {
   image: {
     width: '90%',
     height: 270,
-    marginHorizontal: 20,
+    marginHorizontal: 16,
     marginVertical: 20,
 
   },
@@ -29,7 +29,7 @@ const styles = {
     flex: 1,
     alignItems: 'left',
     backgroundColor: 'white',
-    marginHorizontal: 20,
+    marginHorizontal: 16,
   },
   listitem: {
     color: 'black',
@@ -40,7 +40,7 @@ const styles = {
     justifyContent: 'center',
     lineHeight: 26,
     textAlign: 'left',
-    marginHorizontal: 10,
+    marginHorizontal: 16,
     textTransform: 'capitalize',
   },
   heading: {
@@ -65,7 +65,7 @@ const styles = {
   horizontalline: {
     borderTopWidth: 3,
     borderTopColor: '#C7C7CC',
-    marginHorizontal: 18,
+    marginHorizontal: 16,
   },
   price: {
     textDecorationLine: 'line-through',
