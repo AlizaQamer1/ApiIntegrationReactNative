@@ -9,10 +9,11 @@ import ProductListing from '../../screens/Product/productListing';
 import ProductDetail from '../../screens/Product/productDetails';
 import PostListing from '../../screens/Post/postListing';
 import PostDetail from '../../screens/Post/postDetail';
+import User from '../../screens/User';
 
 const HomeStack = ({navigation}) => {
   return (
-    <Stack.Navigator initialRouteName="postListing">
+    <Stack.Navigator initialRouteName="user">
       <Stack.Screen
         name="Home"
         component={Home}
@@ -90,6 +91,20 @@ const HomeStack = ({navigation}) => {
         component={PostDetail}
         options={{
           title: 'Post Details',
+          headerStyle: {
+            backgroundColor: '#0492C2',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      />
+        <Stack.Screen
+        name="user"
+        component={User}
+        options={{
+          headerShown:false,
           headerStyle: {
             backgroundColor: '#0492C2',
           },

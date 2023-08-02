@@ -1,5 +1,5 @@
 const styles={
-   
+  
     list: {
         marginTop:20,
         alignItems: 'left',
@@ -18,8 +18,14 @@ const styles={
         textAlign: 'left',
         textTransform: 'capitalize',
       },
-      starcontainer:{
-       
+      like:{
+
+       color:"lightblue",
+        marginHorizontal:10
+
+      },
+      comment:{
+        color:"gray",
         marginHorizontal:10
 
       },

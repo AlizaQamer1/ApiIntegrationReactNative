@@ -10,6 +10,9 @@ import {
 } from 'react-native';
 import {Rating} from 'react-native-ratings';
 import { useRoute } from '@react-navigation/native';
+import { faComment } from '@fortawesome/free-solid-svg-icons/faComment';
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons/faThumbsUp';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
 import styles from './Style';
 import {postdetail} from '../../../helpers/GetApi';
@@ -64,25 +67,11 @@ export default function PostDetail() {
           {postDetail?.body}
         </Text>
         <View style={styles.likingcontainer}>
-          <Rating
-            style={styles.starcontainer}
-            type="heart"
-            ratingCount={1}
-            imageSize={25}
-            readonly
-            startingValue={1}
-          />
+        <FontAwesomeIcon style={styles.like} icon={ faThumbsUp } size={25} />
           <Text style={styles.listitem}>{postDetail?.reactions} Reactions</Text>
         </View>
         <View style={styles.commentcontainer}>
-          <Rating
-            style={styles.starcontainer}
-            type="bell"
-            ratingCount={1}
-            imageSize={25}
-            readonly
-            startingValue={1}
-          />
+        <FontAwesomeIcon style={styles.comment} icon={ faComment } size={25}/>
           <Text style={styles.listitem}>{comments.length} Comments</Text>
         </View>
         
