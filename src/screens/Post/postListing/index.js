@@ -12,7 +12,6 @@ import {useNavigation} from '@react-navigation/native';
 
 import Title from '../../../components/Title';
 import styles from './Style';
-import {images} from '../../../assets/images';
 import {postlisting} from '../../../helpers/GetApi';
 
 export default function PostListing() {
@@ -76,6 +75,7 @@ export default function PostListing() {
     }
     return null;
   };
+ 
   return (
     <View style={styles.container}>
       <Title style={styles.maintitle} title="Updates" />
@@ -84,14 +84,20 @@ export default function PostListing() {
         onEndReached={handleLoadMore}
         onEndReachedThreshold={0.5}
         ListFooterComponent={renderFooter}
+
         renderItem={({item, index}) => {
           console.log(item.userr?.image);
           return (
             <View style={styles.list}>
               <Text style={styles.horizontalline}></Text>
               <View style={styles.titlecontainer}>
+              <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('user', {userId: item?.userr?.id})
+              }>
               <Image style={styles.image} source={renderUserImage(item)} />
-                {/* <Image style={styles.image} source={images.groceries} /> */}
+              </TouchableOpacity>
+              
                 <Text style={[styles.listitem, styles.heading]}>
                   {item.title}
                 </Text>

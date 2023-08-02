@@ -13,7 +13,7 @@ import User from '../../screens/User';
 
 const HomeStack = ({navigation}) => {
   return (
-    <Stack.Navigator initialRouteName="user">
+    <Stack.Navigator initialRouteName="postListing">
       <Stack.Screen
         name="Home"
         component={Home}
@@ -104,7 +104,7 @@ const HomeStack = ({navigation}) => {
         name="user"
         component={User}
         options={{
-          headerShown:false,
+          title:"User",
           headerStyle: {
             backgroundColor: '#0492C2',
           },

@@ -103,12 +103,21 @@ export const postdetail = async postId => {
   }
 };
 
+export const userprofile = async (userId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/users/${userId}`);
 
-export const userprofile= async()=>{
-  try{
-    const response=await axios.get(`${BASE_URL}/users/8`);
-    return response.data;
-  }catch (error) {
-    console.error('Error fetching posts', error);
+    const userPostsResponse = await axios.get(
+      `${BASE_URL}/posts/user/${userId}`
+    );
+
+    const usersResponse = await axios.get(`${BASE_URL}/users`);
+    const userPosts=userPostsResponse.data
+    const userinfo=usersResponse.data
+    const user=response.data
+
+    return {user,userinfo,userPosts};
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
   }
-}
+};
