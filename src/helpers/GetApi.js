@@ -75,3 +75,13 @@ export const postlisting = async (currentPage=1) => {
     console.error('Error fetching posts', error);
   }
 };
+
+export const postdetail = async () => {
+  try {
+
+    const response = await axios.get(`${BASE_URL}/posts/3`);
+    return response.data
+  } catch (error) {
+    console.error('Error fetching posts', error);
+  }
+};

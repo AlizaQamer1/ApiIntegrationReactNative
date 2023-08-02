@@ -12,7 +12,7 @@ import PostDetail from '../../screens/Post/postDetail';
 
 const HomeStack = ({navigation}) => {
   return (
-    <Stack.Navigator initialRouteName="postListing">
+    <Stack.Navigator initialRouteName="postDetail">
       <Stack.Screen
         name="Home"
         component={Home}
