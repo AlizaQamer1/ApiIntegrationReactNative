@@ -1,16 +1,10 @@
 const styles={
-    container:{
-        backgroundColor:"white",
-        flex:1
-      
-        
-    },
+   
     list: {
-       marginTop:50,
-        flex: 1,
+        marginTop:20,
         alignItems: 'left',
         backgroundColor: 'white',
-        marginHorizontal: 16,
+      
      
       },
       listitem: {
@@ -20,8 +14,8 @@ const styles={
         backgroundColor: 'white',
         justifyContent: 'center',
         lineHeight: 26,
+        marginHorizontal: 16,
         textAlign: 'left',
-     
         textTransform: 'capitalize',
       },
       starcontainer:{
@@ -36,22 +30,22 @@ const styles={
         borderColor:"gray",
         width:200,
         borderRadius:10,
-        margin:10
+        marginVertical:10,
+        marginHorizontal: 26,
       },
       commentcontainer:{
         flexDirection:"row",
         padding:10,
         borderWidth:1,
         borderColor:"gray",
-        marginHorizontal:10,
         width:200,
         borderRadius:10,
+        marginHorizontal: 26,
       },
     
 
       titlecontainer:{
         flexDirection:"row",
-        padding:10
       },
       heading:{
         
@@ -63,7 +57,7 @@ const styles={
         width:70,
         height:70,
         borderRadius:50,
-        backgroundColor:"rgba(250,250,250)",
+        backgroundColor:"#D3D3D3",
        marginHorizontal:16
         
       },
@@ -76,6 +70,28 @@ const styles={
       },
       title:{
         padding:10
+      },
+      usercontainer:{
+        flexDirection:"row",
+        marginBottom:10,
+        marginHorizontal:6
+       
+      },
+      username:{
+        paddingTop:30,
+        fontSize:18,
+        fontWeight:"bold",
+        color:"black"
+      },
+      comments:{
+        borderWidth:1,
+     
+        borderColor:"gray",
+        margin:26
+      },
+      horizontalline:{
+        borderBottomColor:"black",
+        borderBottomWidth:1
       }
 }
 

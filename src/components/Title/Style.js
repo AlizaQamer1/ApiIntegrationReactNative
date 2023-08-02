@@ -5,7 +5,7 @@ const styles = {
     fontWeight: 'bold',
     textAlign: 'left',
     color: '#103E5B',
-    paddingHorizontal:10,
+    paddingHorizontal:20,
     paddingTop:15,
     backgroundColor:"white",
     textTransform: 'capitalize',

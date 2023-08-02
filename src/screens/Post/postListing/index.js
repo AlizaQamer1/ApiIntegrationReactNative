@@ -8,6 +8,7 @@ import {
   Image,
 } from 'react-native';
 import {Rating} from 'react-native-ratings';
+import {useNavigation} from '@react-navigation/native';
 
 import Title from '../../../components/Title';
 import styles from './Style';
@@ -17,7 +18,12 @@ import {postlisting} from '../../../helpers/GetApi';
 export default function PostListing() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1)
+  const navigation=useNavigation();
+
+  const handlePostClick = post => {
+    navigation.navigate('postDetail', {post});
+  };
 
   useEffect(() => {
     fetchPosts();
@@ -72,11 +78,11 @@ export default function PostListing() {
   };
   return (
     <View style={styles.container}>
-      <Title title="Updates" />
+      <Title style={styles.maintitle} title="Updates" />
       <FlatList
         data={posts}
         onEndReached={handleLoadMore}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.5}
         ListFooterComponent={renderFooter}
         renderItem={({item, index}) => {
           console.log(item.userr?.image);
@@ -104,7 +110,7 @@ export default function PostListing() {
                 />
                 <Text style={styles.listitem}>{item.reactions}</Text>
               </View>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button} onPress={() => handlePostClick(item)}>
                 <Text style={styles.buttonText}>Show More</Text>
               </TouchableOpacity>
             </View>

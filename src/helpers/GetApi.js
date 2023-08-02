@@ -65,7 +65,11 @@ export const postlisting = async (currentPage=1) => {
         skip: skip,
       },
     });
-    const usersResponse = await axios.get(`${BASE_URL}/users`)
+    const usersResponse = await axios.get(`${BASE_URL}/users`,{
+      params:{
+        limit:150
+      }
+    })
 
 
     const post=postresponse.data;
@@ -76,11 +80,24 @@ export const postlisting = async (currentPage=1) => {
   }
 };
 
-export const postdetail = async () => {
+export const postdetail = async postId => {
   try {
 
-    const response = await axios.get(`${BASE_URL}/posts/3`);
-    return response.data
+    const response = await axios.get(`${BASE_URL}/posts/${postId}`);
+
+    const usersResponse = await axios.get(`${BASE_URL}/users`,{
+      params:{
+        limit:100
+      }
+    });
+
+    const commentsResponse=await axios.get(`${BASE_URL}/posts/${postId}/comments`);
+
+    const posts = response.data
+    const users=usersResponse.data
+    const comments=commentsResponse.data
+
+    return {posts,users,comments}
   } catch (error) {
     console.error('Error fetching posts', error);
   }

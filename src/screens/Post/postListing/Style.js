@@ -16,7 +16,7 @@ const styles={
         flex: 1,
         alignItems: 'left',
         backgroundColor: 'white',
-        marginHorizontal: 16,
+        marginHorizontal: 10,
         marginTop:10,
         marginBottom:10
       },
@@ -37,7 +37,8 @@ const styles={
       },
       likingcontainer:{
         flexDirection:"row",
-        padding:10
+        paddingHorizontal:10,
+        paddingBottom:10
       },
       button: {
         backgroundColor: "rgba(0, 128, 128, 0.8)", 
@@ -56,11 +57,13 @@ const styles={
       },
       titlecontainer:{
         flexDirection:"row",
-        padding:10
+        padding:10,
+        alignItems:"center",
+       
       },
       heading:{
-        paddingTop:10,
-        paddingRight:25,
+        textAlign:"justify",
+        paddingRight:32,
         fontWeight:"bold"
 
       },
@@ -68,7 +71,8 @@ const styles={
         width:70,
         height:70,
         borderRadius:50,
-       marginHorizontal:0
+       
+        backgroundColor:"#D3D3D3",
         
       },
       body:{
