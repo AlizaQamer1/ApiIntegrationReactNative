@@ -1,6 +1,9 @@
 import axios from 'axios';
 
 const BASE_URL = 'https://dummyjson.com';
+import { storage } from '../Storage';
+
+const id = storage.getString('id');
 
 export const quotations = async (currentPage = 1) => {
   try {
@@ -108,10 +111,18 @@ export const userprofile = async (userId) => {
     const response = await axios.get(`${BASE_URL}/users/${userId}`);
 
     const userPostsResponse = await axios.get(
-      `${BASE_URL}/posts/user/${userId}`
+      `${BASE_URL}/posts/user/${userId}`,{
+        params:{
+          limit:150
+        }
+      }
     );
 
-    const usersResponse = await axios.get(`${BASE_URL}/users`);
+    const usersResponse = await axios.get(`${BASE_URL}/users`,{
+      params:{
+        limit:150
+      }
+    });
     const userPosts=userPostsResponse.data
     const userinfo=usersResponse.data
     const user=response.data
@@ -119,5 +130,26 @@ export const userprofile = async (userId) => {
     return {user,userinfo,userPosts};
   } catch (error) {
     console.error('Error fetching user profile:', error);
+  }
+};
+
+
+export const todo = async () => {
+  try {
+    const id = storage.getString('id');
+    if (!id) {
+      throw new Error('User ID not available.');
+    }
+
+    const response = await axios.get(`${BASE_URL}/todos/user/${id}`, {
+      params: {
+        limit: 150,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching Todos:', error.message);
+    throw error;
   }
 };

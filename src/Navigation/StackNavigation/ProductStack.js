@@ -8,9 +8,9 @@ from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import ProductDetail from '../screens/Product/productDetails';
-import ProductListing from '../screens/Product/productListing';
-import ProductCategories from '../screens/Product/productCategories';
+import ProductDetail from '../../screens/Product/productDetails';
+import ProductListing from '../../screens/Product/productListing';
+import ProductCategories from '../../screens/Product/productCategories';
 
 const Stack = createNativeStackNavigator();
 
