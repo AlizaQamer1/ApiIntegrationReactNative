@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 import AutheticationStack from './Navigation/StackNavigation/AuthenticationStack';  
-import HomeStack from './Navigation/StackNavigation/HomeStack';
+import BottomStack from './Navigation/StackNavigation/BottomStack';
 import SplashScreen from './splashScreen';
 import {storage} from './Storage';
 import { NavigationContainer } from '@react-navigation/native';
@@ -33,7 +33,7 @@ const App = () => {
         {/* Navigation Drawer as a landing page */}
         <Stack.Screen
           name="HomeStack"
-          component={HomeStack}
+          component={BottomStack}
           // Hiding header for Navigation Drawer
           options={{headerShown: false}}
         />

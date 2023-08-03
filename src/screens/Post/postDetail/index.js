@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {View, Text, TouchableOpacity, Image, ScrollView} from 'react-native';
-import {useRoute, useNavigation} from '@react-navigation/native';
+import {useRoute, useNavigation, useFocusEffect} from '@react-navigation/native';
 import {faComment} from '@fortawesome/free-solid-svg-icons/faComment';
 import {faThumbsUp} from '@fortawesome/free-solid-svg-icons/faThumbsUp';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -16,17 +16,20 @@ export default function PostDetail() {
   const route = useRoute();
   const navigation = useNavigation();
 
-  useEffect(() => {
-    fetchPostDetail();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchPostDetail();
+    }, [navigation])
+  );
+
 
   const fetchPostDetail = async () => {
     try {
-      const {post} = route.params || {};
-      if (!post) {
-        console.error('No post selected.');
-        return;
-      }
+      const {post} = route?.params || {};
+      // if (!post) {
+      //   console.error('No post selected.');
+      //   return;
+      // }
       const {posts, users, comments} = await postdetail(post.id);
       posts.user = users.users.find(user => user.id === posts.userId);
 
@@ -38,6 +41,7 @@ export default function PostDetail() {
       setPostDetail(posts);
       setUsers(users.users);
       setComments(updatedComments);
+      console.log('userId',comments?.user?.id)
     } catch (error) {
       console.error('Error fetching Post Detail:', error.message);
     }

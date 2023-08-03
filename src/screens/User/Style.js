@@ -58,6 +58,11 @@ const styles={
     },
     addresstext:{
         paddingVertical:15
+    },
+    horizontalline:{
+        borderBottomWidth:1,
+        marginHorizontal:16,
+        
     }
 
 

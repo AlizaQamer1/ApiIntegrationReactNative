@@ -86,7 +86,6 @@ export default function PostListing() {
         ListFooterComponent={renderFooter}
 
         renderItem={({item, index}) => {
-          console.log(item.userr?.image);
           return (
             <View style={styles.list}>
               <Text style={styles.horizontalline}></Text>
