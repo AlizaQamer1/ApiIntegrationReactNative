@@ -8,6 +8,7 @@ import styles from './Style';
 import Title from '../../../components/Title';
 import {productlisting} from '../../../helpers/GetApi';
 import ProductListingSkeleton from '../../../skeleton/productListingSkeleton';
+import { images } from '../../../assets/images';
 
 
 export default function ProductListing() {
@@ -78,7 +79,16 @@ export default function ProductListing() {
 
   return (
     <View style={styles.listing}>
+    <View style={{flexDirection:"row"}}>
+     <TouchableOpacity
+                onPress={() =>
+                  navigation.goBack()
+                }
+              >
+        <Image style={styles.backicon}  source={images.backarrow}/>
+        </TouchableOpacity>
       <Title title="Available Products" />
+      </View>
       <View style={styles.listingcontainer}>
       {!loading ? (
         <FlatList data={productListing} renderItem={renderList} />

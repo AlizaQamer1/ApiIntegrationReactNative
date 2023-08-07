@@ -8,7 +8,7 @@ import {productdetail} from '../../../helpers/GetApi';
 import {images} from '../../../assets/images';
 import ProductDetailSkeleton from '../../../skeleton/productDetailSkeleton';
 
-export default function ProductDetail() {
+export default function ProductDetail({navigation}) {
   const [productDetails, setProductDetails] = useState({});
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -52,8 +52,15 @@ export default function ProductDetail() {
   return (
     <ScrollView>
       <View style={{backgroundColor: 'white'}}>
+      <TouchableOpacity
+                onPress={() =>
+                  navigation.goBack()
+                }
+              >
+        <Image style={styles.backicon}  source={images.backarrow}/>
+        </TouchableOpacity>
         {loading ? (
-          <ProductDetailSkeleton /> // Display skeleton while loading
+          <ProductDetailSkeleton /> 
         ) : (
           <View style={styles.list}>
             {productDetails.images && productDetails.images.length > 0 ? (

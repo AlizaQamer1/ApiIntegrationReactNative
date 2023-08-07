@@ -13,6 +13,14 @@ const styles = {
     marginTop:50
 
   },
+  backicon:{
+     
+    width:25,
+    height:25,
+    marginTop:23
+     
+
+ },
   icon:{
     width:30,
     height:30

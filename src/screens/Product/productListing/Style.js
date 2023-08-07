@@ -7,6 +7,11 @@ const styles={
         marginBottom:100
         
     },
+    listing:{
+        flex:1,
+        backgroundColor:"white"
+
+    },
     list:{
         padding:15,
         borderWidth:1,
@@ -17,6 +22,14 @@ const styles={
         backgroundColor:"white"
        
     },
+    backicon:{
+     
+        width:25,
+        height:25,
+        marginTop:38,
+        backgroundColor:"white"
+    
+     },
     listitem:{
         textAlign:"left",
        lineHeight:20,

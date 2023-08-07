@@ -1,7 +1,7 @@
 const styles = {
   homecontainer: {
     backgroundColor: 'rgb(247, 247, 247)',
-    marginBottom:10
+    marginBottom:100
   },
   Gridcontainer: {
     justifyContent: 'center',

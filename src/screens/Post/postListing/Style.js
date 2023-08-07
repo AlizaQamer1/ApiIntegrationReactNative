@@ -5,6 +5,7 @@ const styles={
       
         
     },
+   
     horizontalline:{
         borderBottomWidth:2,
         borderBottomColor:"black",

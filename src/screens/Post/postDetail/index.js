@@ -3,12 +3,13 @@ import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useRoute, useNavigation, useFocusEffect } from '@react-navigation/native';
 import { faComment } from '@fortawesome/free-solid-svg-icons/faComment';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons/faThumbsUp';
+import {faArrowLeft} from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import styles from './Style';
 import { postdetail } from '../../../helpers/GetApi';
 import Comments from '../Comments';
-import PostDetailSkeleton from '../../../skeleton/postDetailSkeleton';
 import HomeSkeleton from '../../../skeleton/homeSkeleton';
+import { images } from '../../../assets/images';
 
 export default function PostDetail() {
   const [postDetail, setPostDetail] = useState();
@@ -53,6 +54,14 @@ export default function PostDetail() {
         <ScrollView contentContainerStyle={{  backgroundColor: 'white' }}>
         <View style={styles.container}>
           <View style={styles.list}>
+          <View style={styles.row}>
+          <TouchableOpacity
+                onPress={() =>
+                  navigation.goBack()
+                }
+              >
+        <Image style={styles.backicon}  source={images.backarrow}/>
+        </TouchableOpacity>
             <View style={styles.usercontainer}>
               <TouchableOpacity
                 onPress={() =>
@@ -64,6 +73,7 @@ export default function PostDetail() {
                   source={{ uri: postDetail?.user?.image }}
                 />
               </TouchableOpacity>
+              </View>
               <Text style={styles.username}>{postDetail?.user?.username}</Text>
             </View>
             <Text style={[styles.listitem, styles.title]}>
