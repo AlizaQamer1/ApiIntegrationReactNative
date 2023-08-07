@@ -9,12 +9,12 @@ export default function UserPost({ image, title, body, reactions, post }) {
   const navigation = useNavigation();
 
   const handlePostClick = () => {
-    navigation.navigate('postDetail', { post });
+    navigation.push('postDetail', { post });
     console.log(post)
   };
 
   const handleImageClick = () => {
-    navigation.navigate('user', { userId: post?.user?.id });
+    navigation.push('user', { userId: post?.user?.id });
   };
 
   return (

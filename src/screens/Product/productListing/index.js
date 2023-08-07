@@ -37,18 +37,17 @@ export default function ProductListing() {
       setLoading(false);
       setProductListing(data);
     } catch (error) {
-      setLoading(false);
+     
       console.error('Error fetching ProductListing:', error);
     }
   };
 
   const renderList = ({item, index}) => {
-    if (loading) {
-      return <ProductListingSkeleton />;
-    }
+  
 
     return (
       <View style={styles.list}>
+    
         <TouchableOpacity onPress={() => handleProductClick(item)}>
           <Image style={styles.image} source={{uri: item.thumbnail}} />
 
@@ -81,7 +80,12 @@ export default function ProductListing() {
     <View style={styles.listing}>
       <Title title="Available Products" />
       <View style={styles.listingcontainer}>
+      {!loading ? (
         <FlatList data={productListing} renderItem={renderList} />
+      ):(
+        <ProductListingSkeleton/>
+
+      )}
       </View>
     </View>
   );

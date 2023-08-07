@@ -1,9 +1,14 @@
 const styles={
-  
+  container:{
+    flex:1,
+    backgroundColor:"white"
+
+  },
     list: {
         marginTop:20,
         alignItems: 'left',
         backgroundColor: 'white',
+       
       
      
       },

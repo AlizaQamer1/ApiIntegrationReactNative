@@ -6,8 +6,8 @@ import Todo from '../../screens/todo';
 import ProductStack from './ProductStack';
 import PostStack from './PostStack';
 import LoginUser from '../../screens/LoginUser';
-import { images } from '../../assets/images';
-import { Image } from 'react-native';
+import {images} from '../../assets/images';
+import {Image} from 'react-native';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -20,7 +20,7 @@ const BottomStack = ({navigation}) => {
         headerStyle: {backgroundColor: '#42f44b'},
         headerTintColor: '#fff',
         headerTitleStyle: {fontWeight: 'bold'},
-        tabBarActiveTintColor: 'tomato',
+        tabBarActiveTintColor: 'black',
         tabBarInactiveTintColor: 'gray',
       })}>
       <Tab.Screen
@@ -28,10 +28,15 @@ const BottomStack = ({navigation}) => {
         component={Home}
         options={{
           title: 'Home',
+          headerShown: false,
           tabBarIcon: ({focused, color, size}) => (
             <Image
-              source={images.home}
-              style={{width: 25, height: 25}}
+              source={focused ? images.homefilled : images.homeunfilled}
+              style={{
+                width: 25,
+                height: 25,
+             
+              }}
             />
           ),
           headerStyle: {
@@ -48,11 +53,11 @@ const BottomStack = ({navigation}) => {
         component={ProductStack}
         options={{
           title: 'Products',
+          headerShown: false,
           tabBarIcon: ({focused, color, size}) => (
-            <Image
-              source={images.product}
-              style={{width: 25, height: 25}}
-            />
+            <Image 
+            source={focused ? images.productfilled : images.productunfilled}
+             style={{width: 25, height: 25}} />
           ),
           headerStyle: {
             backgroundColor: '#0492C2',
@@ -68,11 +73,11 @@ const BottomStack = ({navigation}) => {
         component={PostStack}
         options={{
           title: 'Post',
+          headerShown: false,
           tabBarIcon: ({focused, color, size}) => (
-            <Image
-              source={images.post}
-              style={{width: 25, height: 25}}
-            />
+            <Image 
+            source={focused ? images.postfilled : images.postunfilled}
+             style={{width: 25, height: 25}} />
           ),
           headerStyle: {
             backgroundColor: '#0492C2',
@@ -88,11 +93,11 @@ const BottomStack = ({navigation}) => {
         component={Todo}
         options={{
           title: 'Todo',
+          headerShown: false,
           tabBarIcon: ({focused, color, size}) => (
-            <Image
-              source={images.todo}
-              style={{width: 25, height: 25}}
-            />
+            <Image 
+            source={focused ? images.todofilled : images.todounfilled}
+             style={{width: 25, height: 25}} />
           ),
           headerStyle: {
             backgroundColor: '#0492C2',
@@ -108,11 +113,11 @@ const BottomStack = ({navigation}) => {
         component={LoginUser}
         options={{
           title: 'User',
+          headerShown: false,
           tabBarIcon: ({focused, color, size}) => (
-            <Image
-              source={images.user}
-              style={{width: 25, height: 25}}
-            />
+            <Image 
+            source={focused ? images.userfilled : images.userunfilled}
+             style={{width: 25, height: 25}} />
           ),
           headerStyle: {
             backgroundColor: '#0492C2',

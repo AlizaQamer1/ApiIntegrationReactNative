@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -7,13 +6,13 @@ import styles from './Style';
 
 import { images } from '../../../assets/images';
 import Title from '../../../components/Title';
-import ProductCategorySkeleton from '../../../skeleton/productCategorySkeleton';
+import HomeSkeleton from '../../../skeleton/homeSkeleton';
 import { productcategories } from '../../../helpers/GetApi';
-
+import ProductCategorySkeleton from '../../../skeleton/productCategorySkeleton';
 
 export default function ProductCategories() {
-  const [productCategory, setProductCategory] = useState();
-  const [loading,setLoading]=useState(true)
+  const [productCategory, setProductCategory] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -23,7 +22,7 @@ export default function ProductCategories() {
   const fetchProductCategories = async () => {
     try {
       const data = await productcategories();
-      setLoading(false)
+      setLoading(false);
       setProductCategory(data);
     } catch (error) {
       console.error('Error fetching ProductCategories:', error);
@@ -59,28 +58,28 @@ export default function ProductCategories() {
   };
 
   return (
-    <View style={{backgroundColor:"white"}}>
+    <View style={{ backgroundColor: 'white' }}>
       <Title title="Available Products On Our Store" />
       <View style={styles.categorycontainer}>
+      {!loading ? (
         <FlatList
-      
           data={productCategory}
           renderItem={({ item, index }) => (
             <View style={styles.list}>
-              {!loading ? ( 
-                <>
-                  <TouchableOpacity onPress={() => handleItemPress(item)}>
-                    <Image style={styles.image} source={productImages[index]} />
-                    <Text style={styles.listitem}>{item}</Text>
-                  </TouchableOpacity>
-                </>
-              ) : (
-                <ProductCategorySkeleton />
-              )}
+           
+                <TouchableOpacity onPress={() => handleItemPress(item)}>
+                  <Image style={styles.image} source={productImages[index]} />
+                  <Text style={styles.listitem}>{item}</Text>
+                </TouchableOpacity>
+             
             </View>
           )}
           numColumns={2}
+          keyExtractor={(item, index) => index.toString()}
         />
+         ) : (
+                <ProductCategorySkeleton />
+              )}
       </View>
     </View>
   );

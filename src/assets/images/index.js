@@ -23,11 +23,16 @@ export const images = {
     automotive: require('../images/automotive.jpg'),
     lefticon:require('../images/righticon.png'),
     righticon:require('../images/left.png'),
-    home:require('../images/home.png'),
-    post:require('../images/post.png'),
-    product:require('../images/product.png'),
-    todo:require('../images/todo.png'),
-    user:require('../images/user.png')
+   homefilled:require('../images/homefilled.png'),
+   homeunfilled:require('../images/homeunfilled.png'),
+   postfilled:require('../images/postfilled.png'),
+   postunfilled:require('../images/postunfilled.png'),
+   productfilled:require('../images/productfilled.png'),
+   productunfilled:require('../images/productunfilled.png'),
+   todofilled:require('../images/todofilled.png'),
+   todounfilled:require('../images/todounfilled.png'),
+   userfilled:require('../images/userfilled.png'),
+   userunfilled:require('../images/userunfilled.png'),
  
   }
   

@@ -20,8 +20,9 @@ export default function PostListing() {
   const [currentPage, setCurrentPage] = useState(1)
   const navigation=useNavigation();
 
+
   const handlePostClick = post => {
-    navigation.navigate('postDetail', {post});
+    navigation.push('postDetail', {post});
   };
 
   useEffect(() => {
@@ -79,6 +80,7 @@ export default function PostListing() {
   return (
     <View style={styles.container}>
       <Title style={styles.maintitle} title="Updates" />
+     
       <FlatList
         data={posts}
         onEndReached={handleLoadMore}
@@ -92,7 +94,7 @@ export default function PostListing() {
               <View style={styles.titlecontainer}>
               <TouchableOpacity
               onPress={() =>
-                navigation.navigate('user', {userId: item?.userr?.id})
+                navigation.push('user', {userId: item?.userr?.id})
               }>
               <Image style={styles.image} source={renderUserImage(item)} />
               </TouchableOpacity>

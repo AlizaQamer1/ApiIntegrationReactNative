@@ -8,15 +8,17 @@ import styles from './Style';
 import {userprofile} from '../../helpers/GetApi';
 import UserPost from '../../components/UserPost';
 
-export default function User() {
+export default function User(navigation) {
   const [users, setUsers] = useState();
   const [userPosts, setUserPosts] = useState([]);
   const [userinfo, setUserInfo] = useState([]);
   const route = useRoute();
 
+  console.log(route?.params?.userId);
   useEffect(() => {
+  
     fetchUserProfile();
-  }, []);
+  }, [navigation]);
 
   const fetchUserProfile = async () => {
     try {

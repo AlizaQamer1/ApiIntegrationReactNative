@@ -3,12 +3,14 @@ const styles = {
   
     backgroundColor: 'white',
     padding: 10,
+ 
   },
   image: {
     width: '90%',
     height: 270,
     marginHorizontal: 16,
-    marginVertical: 20,
+    marginBottom: 20,
+    marginTop:50
 
   },
   icon:{
