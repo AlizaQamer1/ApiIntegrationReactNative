@@ -11,7 +11,7 @@ const SplashScreen = ({navigation}) => {
     setTimeout(() => {
       setAnimating(false);
       const token = storage.getString('token');
-      token ? navigation.replace('HomeStack') : navigation.replace('AuthStack');
+      token ? navigation.replace('BottomStack') : navigation.replace('AuthStack');
     }, 1000);
   }, []);
 

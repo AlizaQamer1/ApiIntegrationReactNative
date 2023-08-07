@@ -35,10 +35,7 @@ export default function Home() {
   const token = storage.getString('token');
   const navigation = useNavigation();
 
-  const buttonPress = () => {
-    storage.delete('token');
-    navigation.replace('AuthStack');
-  };
+  
 
   const handleLoadMore = () => {
     if (!isLoading) {
@@ -64,7 +61,7 @@ export default function Home() {
 
   return (
     <View style={styles.homecontainer}>
-      <Button title="logout" onPress={buttonPress} />
+     
       <Title title={'Quotations That Inspire'} />
       {quotes.length>0 ?
       <FlatList

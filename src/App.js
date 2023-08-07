@@ -25,18 +25,19 @@ const App = () => {
           options={{headerShown: false}}
         />
        
+       <Stack.Screen
+          name="BottomStack"
+          component={BottomStack}
+          // Hiding header for Navigation Drawer
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name="AuthStack"
           component={AutheticationStack}
           options={{headerShown: false}}
         />
         {/* Navigation Drawer as a landing page */}
-        <Stack.Screen
-          name="HomeStack"
-          component={BottomStack}
-          // Hiding header for Navigation Drawer
-          options={{headerShown: false}}
-        />
+       
       </Stack.Navigator>
     </NavigationContainer>
   )

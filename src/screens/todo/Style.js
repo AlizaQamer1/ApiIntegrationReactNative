@@ -11,7 +11,13 @@ const styles={
         borderColor:"gray",
         marginVertical:10,
         borderRadius:10,
-        color:"black"
+        color:"black",
+        width:300
+    },
+    switch:{
+        marginHorizontal:10,
+        
+
     },
     list:{
         paddingHorizontal:16,

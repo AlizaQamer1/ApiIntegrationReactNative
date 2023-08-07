@@ -7,7 +7,7 @@ const ProductCategorySkeleton = () => (
     speed={1}
     backgroundColor="lightgray"
     foregroundColor="#999"
-    height={600} 
+    height={300} 
     style={styles.productcategoryskeleton} 
   >
     <Rect x="10" y="17" rx="2" ry="1" width="180" height="200" />

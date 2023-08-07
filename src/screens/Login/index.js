@@ -18,8 +18,10 @@ import Input from '../../components/input';
 import Buttoncomponent from '../../components/button';
 import {storage} from '../../Storage';
 import {loginUser} from '../../helpers/PostApi';
+import Loader from '../../helpers/Loader';
 
 export default function Login({navigation}) {
+
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [userNameError, setUserNameError] = useState('');
@@ -30,6 +32,7 @@ export default function Login({navigation}) {
   const radioProps = [{label: 'Remember Me', value: 0}];
 
   const handleLogin = async event => {
+    
     setUserNameError('');
     setPasswordError('');
     event.preventDefault();
@@ -49,16 +52,18 @@ export default function Login({navigation}) {
       setIsLoading(true);
       const data = await loginUser(username, password);
 
-      if (data.token) {
+      if (data) {
         storage.set('token', JSON.stringify(data.token));
         storage.set('id', JSON.stringify(data.id));
-
-        navigation.replace('HomeStack');
+        console.log('Token and ID stored:');
+        navigation.replace('BottomStack');
+        setIsLoading(false);
       } else {
         setPasswordError('Username or password incorrect');
       }
     } catch (error) {
       setPasswordError('Username or password incorrect');
+      console.log('error', error);
     }
   };
 
@@ -86,12 +91,11 @@ export default function Login({navigation}) {
                 placeholder={'Enter Username'}
                 ref={userNameInputRef}
                 returnKeyType="next"
-                onSubmitEditing={() => passwordInputRef?.current?.focus()}
+                onSubmitEditing={() => passwordInputRef.current.focus()}
                 blurOnSubmit={false}
                 onFocus={handleUserNameFocus}
               />
 
-              {/*Showing error */}
               {!!userNameError && (
                 <Text style={styles.errorText}>{userNameError}</Text>
               )}
@@ -109,7 +113,7 @@ export default function Login({navigation}) {
                 secureTextEntry={true}
                 onFocus={handlePasswordFocus}
               />
-              {/*Showing error */}
+
               {!!passwordError && (
                 <Text style={styles.errorText}>{passwordError}</Text>
               )}
@@ -118,7 +122,7 @@ export default function Login({navigation}) {
                 title="Login"
                 onPress={handleLogin}
                 buttonColor={isloading ? 'lightblue' : '#0492C2'}
-                isLoading={isloading} // Pass the isLoading prop
+                isLoading={isloading} 
               />
 
               {/*Login Footer */}
