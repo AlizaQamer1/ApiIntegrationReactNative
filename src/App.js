@@ -5,17 +5,22 @@ import BottomStack from './Navigation/StackNavigation/BottomStack';
 import SplashScreen from './splashScreen';
 import {storage} from './Storage';
 import { NavigationContainer } from '@react-navigation/native';
+import { Provider } from 'react-redux';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import rootReducer from './redux/store';
+import { createStore } from 'redux';
 
 
 const token = storage.getString('token');
 
 const Stack = createNativeStackNavigator();
+const store = createStore(rootReducer);
 
 
 const App = () => {
   
   return(
+    <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SplashScreen">
 
@@ -40,6 +45,7 @@ const App = () => {
        
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
   )
 };
 

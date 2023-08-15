@@ -26,7 +26,7 @@ const styles={
         paddingHorizontal: 35,
         marginHorizontal: 20,
         marginVertical:5,
-        width: 150,
+        width: 170,
         borderRadius: 10,
         
       },

@@ -3,13 +3,15 @@ import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useRoute, useNavigation, useFocusEffect } from '@react-navigation/native';
 import { faComment } from '@fortawesome/free-solid-svg-icons/faComment';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons/faThumbsUp';
-import {faArrowLeft} from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { useDispatch,useSelector } from 'react-redux';
+
 import styles from './Style';
 import { postdetail } from '../../../helpers/GetApi';
 import Comments from '../Comments';
 import HomeSkeleton from '../../../skeleton/homeSkeleton';
 import { images } from '../../../assets/images';
+import { postDetailSuccess } from '../../../redux/postactions';
 
 export default function PostDetail() {
   const [postDetail, setPostDetail] = useState();
@@ -18,6 +20,9 @@ export default function PostDetail() {
   const route = useRoute();
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
+  const dispatch=useDispatch();
+  const postData=useSelector(state=>state?.post?.postData);
+  console.log("Post Detail Data",postData)
 
   useFocusEffect(
     React.useCallback(() => {
@@ -30,14 +35,15 @@ export default function PostDetail() {
       const { post } = route?.params || {};
       setLoading(false);
       const { posts, users, comments } = await postdetail(post.id);
-      posts.user = users.users.find(user => user.id === posts.userId);
+      posts.user =users && users?.users && users?.users.length>0 && users.users.find(user => user.id === posts.userId);
 
-      const updatedComments = comments.comments.map(comment => {
-        const user = users.users.find(user => user.id === comment.user.id);
+      const updatedComments =comments.comments.map(comment => {
+        const user =users && users?.users && users?.users.length>0 &&  users.users.find(user => user.id === comment.user.id);
         return { ...comment, user };
       });
 
       setPostDetail(posts);
+      dispatch(postDetailSuccess(posts))
       setUsers(users.users);
       setComments(updatedComments);
       console.log('userId', comments?.user?.id);

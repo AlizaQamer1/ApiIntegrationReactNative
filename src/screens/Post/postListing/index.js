@@ -13,13 +13,20 @@ import { useNavigation } from '@react-navigation/native';
 import Title from '../../../components/Title';
 import styles from './Style';
 import { postlisting } from '../../../helpers/GetApi';
+import { postListingSuccess } from '../../../redux/postactions';
+import { useDispatch,useSelector } from 'react-redux';
+
 
 export default function PostListing() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isFetchingMore, setIsFetchingMore] = useState(false); // New state for fetching more posts
+  const [isFetchingMore, setIsFetchingMore] = useState(false); 
   const navigation = useNavigation();
+  const dispatch=useDispatch();
+  const postData= useSelector(state=>state?.post?.postData)
+  console.log("Post Listing data", postData)
+
 
   const handlePostClick = (post) => {
     navigation.push('postDetail', { post });
@@ -32,15 +39,17 @@ export default function PostListing() {
   const fetchPosts = async () => {
     try {
       const { post, user } = await postlisting(currentPage);
-      const updatedPosts = post.posts.map((p) => {
+      const updatedPosts = post && post.posts && post.posts.length>0?post.posts.map((p) => {
         const userr = user.users.find((user) => user.id === p.userId);
         return { ...p, userr };
-      });
+      }): [];
 
       if (currentPage === 1) {
         setPosts(updatedPosts);
+        dispatch(postListingSuccess(updatedPosts))
       } else {
         setPosts((prevPosts) => [...prevPosts, ...updatedPosts]);
+        dispatch(postListingSuccess((prevPosts) => [...prevPosts, ...updatedPosts]))
       }
 
       setIsLoading(false);

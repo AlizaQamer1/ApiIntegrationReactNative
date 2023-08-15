@@ -1,4 +1,4 @@
-import React, {useState, useRef, useContext} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   View,
   Text,
@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator,
 } from 'react-native';
-
+import NetInfo from '@react-native-community/netinfo';
 import RadioForm from 'react-native-simple-radio-button';
 
 import {images} from '../../assets/images/index';
@@ -18,7 +18,8 @@ import Input from '../../components/input';
 import Buttoncomponent from '../../components/button';
 import {storage} from '../../Storage';
 import {loginUser} from '../../helpers/PostApi';
-import Loader from '../../helpers/Loader';
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from '../../redux/actions';
 
 export default function Login({navigation}) {
 
@@ -30,6 +31,18 @@ export default function Login({navigation}) {
   const userNameInputRef = useRef();
   const passwordInputRef = useRef();
   const radioProps = [{label: 'Remember Me', value: 0}];
+  const [isConnected, setIsConnected] = useState(true);
+  const dispatch=useDispatch();
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setIsConnected(state.isConnected);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const handleLogin = async event => {
     
@@ -51,6 +64,7 @@ export default function Login({navigation}) {
     try {
       setIsLoading(true);
       const data = await loginUser(username, password);
+      dispatch(loginSuccess(data))
 
       if (data) {
         storage.set('token', JSON.stringify(data.token));
@@ -77,6 +91,7 @@ export default function Login({navigation}) {
 
   return (
     <SafeAreaView>
+    {isConnected ?(
       <View style={styles.logincontainer}>
         <View style={styles.loginscreen}>
           <KeyboardAvoidingView enabled>
@@ -155,6 +170,10 @@ export default function Login({navigation}) {
           </KeyboardAvoidingView>
         </View>
       </View>
+      )
+      :(
+        <Text>No Internet connection</Text>
+      )}
     </SafeAreaView>
   );
 }

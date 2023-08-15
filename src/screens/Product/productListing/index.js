@@ -9,6 +9,8 @@ import Title from '../../../components/Title';
 import {productlisting} from '../../../helpers/GetApi';
 import ProductListingSkeleton from '../../../skeleton/productListingSkeleton';
 import { images } from '../../../assets/images';
+import { productListingSuccess } from '../../../redux/productactions';
+import { useDispatch,useSelector } from 'react-redux';
 
 
 export default function ProductListing() {
@@ -16,6 +18,10 @@ export default function ProductListing() {
   const [loading, setLoading] = useState(true);
   const route = useRoute();
   const navigation = useNavigation();
+  const dispatch=useDispatch();
+  const productData_ = useSelector(state => state?.product?.productData);
+  console.log("product listing data",productData_)
+
 
   const handleProductClick = product => {
     navigation.navigate('productDetail', {product});
@@ -35,6 +41,8 @@ export default function ProductListing() {
       }
 
       const data = await productlisting(category);
+      dispatch(productListingSuccess(data))
+
       setLoading(false);
       setProductListing(data);
     } catch (error) {

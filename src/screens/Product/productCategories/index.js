@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import styles from './Style';
-
 import { images } from '../../../assets/images';
 import Title from '../../../components/Title';
-import HomeSkeleton from '../../../skeleton/homeSkeleton';
+import { productCategorySuccess } from '../../../redux/productactions';
 import { productcategories } from '../../../helpers/GetApi';
 import ProductCategorySkeleton from '../../../skeleton/productCategorySkeleton';
 
@@ -14,6 +15,9 @@ export default function ProductCategories() {
   const [productCategory, setProductCategory] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
+  const dispatch=useDispatch();
+  const productData_ = useSelector(state => state?.product?.productData);
+  console.log("product category data",productData_)
 
   useEffect(() => {
     fetchProductCategories();
@@ -22,6 +26,7 @@ export default function ProductCategories() {
   const fetchProductCategories = async () => {
     try {
       const data = await productcategories();
+      dispatch(productCategorySuccess(data))
       setLoading(false);
       setProductCategory(data);
     } catch (error) {
@@ -58,7 +63,7 @@ export default function ProductCategories() {
   };
 
   return (
-    <View style={{ backgroundColor: 'white' }}>
+    <View style={{flex:1, backgroundColor: 'white' }}>
       <Title title="Available Products On Our Store" />
       <View style={styles.categorycontainer}>
       {!loading ? (

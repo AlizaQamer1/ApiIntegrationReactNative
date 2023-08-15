@@ -7,12 +7,17 @@ import styles from './Style';
 import {productdetail} from '../../../helpers/GetApi';
 import {images} from '../../../assets/images';
 import ProductDetailSkeleton from '../../../skeleton/productDetailSkeleton';
+import { productDetailSuccess } from '../../../redux/productactions';
+import { useDispatch,useSelector } from 'react-redux';
 
 export default function ProductDetail({navigation}) {
   const [productDetails, setProductDetails] = useState({});
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const route = useRoute();
+  const dispatch=useDispatch();
+  const productData=useSelector(state=>state?.product?.productData);
+  console.log("product detail", productData)
 
   useEffect(() => {
     fetchProductDetail();
@@ -26,6 +31,7 @@ export default function ProductDetail({navigation}) {
         return;
       }
       const data = await productdetail(product.id);
+      dispatch(productDetailSuccess(data))
       setProductDetails(data);
       setLoading(false);
     } catch (error) {

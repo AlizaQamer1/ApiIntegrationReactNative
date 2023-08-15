@@ -3,7 +3,8 @@ const styles={
     categorycontainer:{
        backgroundColor:"white",
        padding:10,
-       marginBottom:180
+       flex:1,
+      
     },
     list:{
         justifyContent: 'center',

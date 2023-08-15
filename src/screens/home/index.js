@@ -7,6 +7,7 @@ import { storage } from '../../Storage';
 import { useNavigation } from '@react-navigation/native';
 import { quotations } from '../../helpers/GetApi';
 import HomeSkeleton from '../../skeleton/homeSkeleton';
+import { logToConsole } from '../../../ReactotronConfig';
 
 export default function Home() {
   const [quotes, setQuotes] = useState([]);
@@ -14,8 +15,10 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMoreQuotes, setHasMoreQuotes] = useState(true);
 
+  
   useEffect(() => {
     fetchData();
+    logToConsole({hasMoreQuotes})
   }, [currentPage]);
 
   const fetchData = async () => {
