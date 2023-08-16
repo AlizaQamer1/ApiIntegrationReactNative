@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, Image, TouchableOpacity, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -65,6 +65,9 @@ export default function ProductCategories() {
   return (
     <View style={{flex:1, backgroundColor: 'white' }}>
       <Title title="Available Products On Our Store" />
+      <View style={styles.button} >
+      <Button onPress={()=>navigation.navigate("addproductcategory")} title='Add New Category' color="teal"/>
+      </View>
       <View style={styles.categorycontainer}>
       {!loading ? (
         <FlatList

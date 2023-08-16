@@ -10,6 +10,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import ProductDetail from '../../screens/Product/productDetails';
 import ProductListing from '../../screens/Product/productListing';
+import AddProduct from '../../screens/addProduct';
+import AddProductCategory from '../../screens/addProductCategory';
 import ProductCategories from '../../screens/Product/productCategories';
 
 const Stack = createNativeStackNavigator();
@@ -55,6 +57,34 @@ export default function ProductStack() {
         component={ProductDetail}
         options={{
           title: 'Product Details',
+          headerStyle: {
+            backgroundColor: '#0492C2',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      />
+        <Stack.Screen
+        name="addproduct"
+        component={AddProduct}
+        options={{
+          title: 'AddProduct',
+          headerStyle: {
+            backgroundColor: '#0492C2',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      />
+        <Stack.Screen
+        name="addproductcategory"
+        component={AddProductCategory}
+        options={{
+          title: 'AddProductCategory',
           headerStyle: {
             backgroundColor: '#0492C2',
           },

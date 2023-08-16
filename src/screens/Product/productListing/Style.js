@@ -30,6 +30,7 @@ const styles={
         backgroundColor:"white"
     
      },
+
     listitem:{
         textAlign:"left",
        lineHeight:20,
@@ -62,6 +63,12 @@ const styles={
     },
     discountedprice:{
         color:"red"
+    },
+    button:{
+        marginLeft:40,
+        width:250,
+       marginBottom:30
+
     }
 }
 

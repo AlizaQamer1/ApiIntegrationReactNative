@@ -28,6 +28,12 @@ const styles={
     image:{
         width:"100%",
         height:250
+    },
+    button:{
+        marginLeft:25,
+        width:250,
+        marginBottom:30
+
     }
 
 }

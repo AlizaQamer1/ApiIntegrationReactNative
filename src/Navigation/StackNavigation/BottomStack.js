@@ -108,6 +108,7 @@ const BottomStack = ({navigation}) => {
           },
         }}
       />
+      
       <Tab.Screen
         name="user"
         component={LoginUser}

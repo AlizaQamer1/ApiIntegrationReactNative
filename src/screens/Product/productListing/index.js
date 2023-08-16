@@ -1,6 +1,6 @@
 
 import React, {useState, useEffect} from 'react';
-import {View, Text, FlatList, Image, TouchableOpacity} from 'react-native';
+import {View, Text, FlatList, Image, TouchableOpacity, Button} from 'react-native';
 import {Rating} from 'react-native-ratings';
 import {useRoute, useNavigation} from '@react-navigation/native';
 
@@ -96,7 +96,13 @@ export default function ProductListing() {
         <Image style={styles.backicon}  source={images.backarrow}/>
         </TouchableOpacity>
       <Title title="Available Products" />
+    
       </View>
+   
+      <View style={styles.button}>
+      <Button onPress={()=>navigation.navigate("addproduct")} title='Add New Product' color="teal"/>
+      </View>
+     
       <View style={styles.listingcontainer}>
       {!loading ? (
         <FlatList data={productListing} renderItem={renderList} />
