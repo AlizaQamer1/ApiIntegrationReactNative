@@ -1,27 +1,49 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, ScrollView, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  Button,
+} from 'react-native';
 import {Rating} from 'react-native-ratings';
 import {useRoute} from '@react-navigation/native';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faShoppingCart} from '@fortawesome/free-solid-svg-icons/faShoppingCart';
 
 import styles from './Style';
 import {productdetail} from '../../../helpers/GetApi';
 import {images} from '../../../assets/images';
 import ProductDetailSkeleton from '../../../skeleton/productDetailSkeleton';
-import { productDetailSuccess } from '../../../redux/productactions';
-import { useDispatch,useSelector } from 'react-redux';
+import {productDetailSuccess} from '../../../redux/productactions';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  addProductToCart,
+  addToAddedToCartMap,
+} from '../../../redux/cartactions';
+import {logToConsole} from '../../../../ReactotronConfig';
 
 export default function ProductDetail({navigation}) {
   const [productDetails, setProductDetails] = useState({});
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [loading, setLoading] = useState(true);
+
   const route = useRoute();
-  const dispatch=useDispatch();
-  const productData=useSelector(state=>state?.product?.productData);
-  console.log("product detail", productData)
+  const dispatch = useDispatch();
+  const addedToCartMap = useSelector(state => state.cart.addedToCartMap);
+  const cartCount = useSelector(state => state.cart.cartCount);
+  const productData = useSelector(state => state?.product?.productData);
+  console.log('product detail', productData);
 
   useEffect(() => {
     fetchProductDetail();
   }, []);
+
+  const addToCartItem = item => {
+    dispatch(addProductToCart(item));
+    dispatch(addToAddedToCartMap(item.id));
+  };
 
   const fetchProductDetail = async () => {
     try {
@@ -31,7 +53,7 @@ export default function ProductDetail({navigation}) {
         return;
       }
       const data = await productdetail(product.id);
-      dispatch(productDetailSuccess(data))
+      dispatch(productDetailSuccess(data));
       setProductDetails(data);
       setLoading(false);
     } catch (error) {
@@ -58,15 +80,17 @@ export default function ProductDetail({navigation}) {
   return (
     <ScrollView>
       <View style={{backgroundColor: 'white'}}>
-      <TouchableOpacity
-                onPress={() =>
-                  navigation.goBack()
-                }
-              >
-        <Image style={styles.backicon}  source={images.backarrow}/>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Image style={styles.backicon} source={images.backarrow} />
         </TouchableOpacity>
+        <View style={styles.cartbutton}>
+          <TouchableOpacity onPress={() => navigation.navigate('cart')}>
+            <FontAwesomeIcon icon={faShoppingCart} size={25} color="teal" />
+          </TouchableOpacity>
+          <Text style={styles.cartnumbering}>{cartCount}</Text>
+        </View>
         {loading ? (
-          <ProductDetailSkeleton /> 
+          <ProductDetailSkeleton />
         ) : (
           <View style={styles.list}>
             {productDetails.images && productDetails.images.length > 0 ? (
@@ -105,6 +129,15 @@ export default function ProductDetail({navigation}) {
             </View>
 
             <Text style={styles.horizontalline}></Text>
+            <View
+              style={{marginLeft: 'auto', marginRight: 16, marginVertical: 10}}>
+              <Button
+                onPress={() => addToCartItem(productDetails)}
+                title="Add to Cart"
+                disabled={addedToCartMap[productDetails.id]}
+              />
+            </View>
+
             <View style={styles.pricecontainer}>
               <Text
                 style={[styles.listitem, (style = {color: 'rgb(86, 89, 89)'})]}>

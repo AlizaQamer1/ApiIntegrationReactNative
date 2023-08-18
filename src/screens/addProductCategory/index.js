@@ -8,18 +8,21 @@ import {
   Platform,
   Alert,
   ScrollView,
-  Linking
+  Linking,
+  NativeModules,
+  NativeEventEmitter,
 } from 'react-native';
 import {PermissionsAndroid} from 'react-native';
-
+import BleManager from 'react-native-ble-manager';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-// import Geolocation from 'react-native-geolocation-service';
 import styles from './Style';
 import Geolocation from '@react-native-community/geolocation';
 import Title from '../../components/Title';
 import Input from '../../components/input';
 import {logToConsole} from '../../../ReactotronConfig';
 
+const BleManagerModule = NativeModules.BleManager;
+const BleManagerEmitter = new NativeEventEmitter(BleManagerModule);
 
 export default function AddProductCategory({navigation}) {
   const [categoryName, setCategoryName] = useState('');
@@ -28,6 +31,163 @@ export default function AddProductCategory({navigation}) {
   const [currentLatitude, setCurrentLatitude] = useState('...');
   const [locationStatus, setLocationStatus] = useState('');
 
+  const peripherals = new Map();
+  const [isScanning, setIsScanning] = useState(false);
+  const [connected, setConnected] = useState(false);
+  const [bluetoothDevices, setBluetoothDevices] = useState([]);
+
+  useEffect(() => {
+    // turn on bluetooth if it is not on
+    BleManager.enableBluetooth().then(() => {
+      console.log('Bluetooth is turned on!');
+    });
+    // start bluetooth manager
+    BleManager.start({showAlert: false}).then(() => {
+      console.log('BLE Manager initialized');
+    });
+    let stopListener = BleManagerEmitter.addListener(
+      'BleManagerStopScan',
+      () => {
+        setIsScanning(false);
+        console.log('Scan is stopped');
+        handleGetConnectedDevices();
+      },
+    );
+    if (Platform.OS === 'android' && Platform.Version >= 23) {
+      PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      ).then(result => {
+        if (result) {
+          console.log('Permission is OK');
+        } else {
+          PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          ).then(result => {
+            if (result) {
+              console.log('User accept');
+            } else {
+              console.log('User refuse');
+            }
+          });
+        }
+      });
+    }
+    return () => {
+      stopListener.remove();
+    };
+  }, []);
+  const startScan = () => {
+    if (!isScanning) {
+      BleManager.scan([], 5, true)
+        .then(() => {
+          setIsScanning(true);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  };
+  const handleGetConnectedDevices = () => {
+    BleManager.getConnectedPeripherals([]).then(results => {
+      if (results.length == 0) {
+        console.log('No connected bluetooth devices');
+      } else {
+        for (let i = 0; i < results.length; i++) {
+          let peripheral = results[i];
+          peripheral.connected = true;
+          peripherals.set(peripheral.id, peripheral);
+          setConnected(true);
+          setBluetoothDevices(Array.from(peripherals.values()));
+        }
+      }
+    });
+  };
+  const connectToPeripheral = peripheral => {
+    if (peripheral.connected) {
+      BleManager.disconnect(peripheral.id).then(() => {
+        peripheral.connected = false;
+        setConnected(false);
+        alert(`Disconnected from ${peripheral.name}`);
+      });
+    } else {
+      BleManager.connect(peripheral.id)
+        .then(() => {
+          let peripheralResponse = peripherals.get(peripheral.id);
+          if (peripheralResponse) {
+            peripheralResponse.connected = true;
+            peripherals.set(peripheral.id, peripheralResponse);
+            setConnected(true);
+            setBluetoothDevices(Array.from(peripherals.values()));
+          }
+          alert('Connected to ' + peripheral.name);
+        })
+        .catch(error => console.log(error));
+      /* Read current RSSI value */
+      setTimeout(() => {
+        BleManager.retrieveServices(peripheral.id).then(peripheralData => {
+          console.log('Peripheral services:', peripheralData);
+        });
+      }, 900);
+    }
+  };
+
+  const RenderItem = ({peripheral}) => {
+    const color = peripheral.connected ? 'green' : '#fff';
+    return (
+      <>
+        <Text
+          style={{
+            fontSize: 20,
+            marginLeft: 10,
+            marginBottom: 5,
+           
+          }}>
+          Nearby Devices:
+        </Text>
+        <TouchableOpacity onPress={() => connectToPeripheral(peripheral)}>
+          <View
+            style={{
+              backgroundColor: color,
+              borderRadius: 5,
+              paddingVertical: 5,
+              marginHorizontal: 10,
+              paddingHorizontal: 10,
+            }}>
+            <Text
+              style={{
+                fontSize: 18,
+                textTransform: 'capitalize',
+                color: connected ? Colors.white : Colors.black,
+              }}>
+              {peripheral.name}
+            </Text>
+            <View
+              style={{
+                backgroundColor: color,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: connected ? Colors.white : Colors.black,
+                }}>
+                RSSI: {peripheral.rssi}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: connected ? Colors.white : Colors.black,
+                }}>
+                ID: {peripheral.id}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </>
+    );
+  };
 
   useEffect(() => {
     const requestLocationPermission = async () => {
@@ -41,11 +201,25 @@ export default function AddProductCategory({navigation}) {
             {
               title: 'Location Access Required',
               message: 'This App needs to Access your location',
+              buttonPositive: 'OK',
             },
           );
+
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             getOneTimeLocation();
             subscribeLocationLocation();
+          } else if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+            Alert.alert(
+              'Location Access Denied',
+              'You have denied location access and selected "Don\'t ask again". To enable location access, go to the app settings.',
+              [
+                {text: 'Cancel'},
+                {
+                  text: 'Open Settings',
+                  onPress: () => Linking.openSettings(),
+                },
+              ],
+            );
           } else {
             setLocationStatus('Permission Denied');
           }
@@ -81,8 +255,23 @@ export default function AddProductCategory({navigation}) {
         setCurrentLatitude(currentLatitude);
       },
       error => {
-        setLocationStatus(error.message);
+        if (error.code === error.PERMISSION_DENIED) {
+          Alert.alert(
+            'Location Access Denied',
+            'Location permission was not granted. To enable location access, go to the app settings.',
+            [
+              {text: 'Cancel'},
+              {
+                text: 'Open Settings',
+                onPress: () => Linking.openSettings(),
+              },
+            ],
+          );
+        } else {
+          setLocationStatus(error.message);
+        }
       },
+
       {
         enableHighAccuracy: false,
         timeout: 30000,
@@ -132,20 +321,20 @@ export default function AddProductCategory({navigation}) {
             buttonPositive: 'OK',
           },
         );
-  
+
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          return true; // Permission granted
+          return true;
         } else if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
           Alert.alert(
             'Camera Permission Denied',
-            'You have denied camera permission and selected "Don\'t ask again". To enable the camera permission, go to the app settings.',
+            'You have denied camera permission. To enable the camera permission, go to the app settings.',
             [
-              { text: 'Cancel' },
+              {text: 'Cancel'},
               {
                 text: 'Open Settings',
                 onPress: () => Linking.openSettings(),
               },
-            ]
+            ],
           );
           return false; // Permission denied
         } else {
@@ -159,9 +348,6 @@ export default function AddProductCategory({navigation}) {
       return true; // For platforms other than Android
     }
   };
-  
-  
-  
 
   const requestExternalWritePermission = async () => {
     if (Platform.OS === 'android') {
@@ -307,8 +493,6 @@ export default function AddProductCategory({navigation}) {
           </TouchableOpacity>
         </View>
 
-     
-
         {filePath && (
           <Image source={{uri: filePath.uri}} style={styles.image} />
         )}
@@ -320,6 +504,32 @@ export default function AddProductCategory({navigation}) {
           <Text> Longitude: {currentLongitude}</Text>
           <Text> Latitude: {currentLatitude}</Text>
         </View>
+        <View>
+            <Text
+              style={{
+                fontSize: 30,
+                textAlign: 'center',
+              
+              }}>
+              React Native BLE Manager Tutorial
+            </Text>
+         
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={styles.buttonStyle}
+            onPress={startScan}>
+            <Text style={styles.buttonTextStyle}>
+              {isScanning ? 'Scanning...' : 'Scan Bluetooth Devices'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {/* list of scanned bluetooth devices */}
+        {bluetoothDevices.map(device => (
+          <View key={device.id}>
+            <RenderItem peripheral={device} />
+          </View>
+        ))}
+
         <View style={styles.savebutton}>
           <Button title="Save Category" onPress={handleSave} color="teal" />
         </View>

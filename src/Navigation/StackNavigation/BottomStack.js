@@ -4,6 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../../screens/home';
 import Todo from '../../screens/todo';
 import ProductStack from './ProductStack';
+import AddToCart from '../../screens/addToCart';
 import PostStack from './PostStack';
 import LoginUser from '../../screens/LoginUser';
 import {images} from '../../assets/images';
@@ -129,6 +130,8 @@ const BottomStack = ({navigation}) => {
           },
         }}
       />
+        
+       
     </Tab.Navigator>
   );
 };

@@ -86,7 +86,18 @@ const styles = {
   starcontainer:{
     
     padding:10
-  }
+  },
+  cartbutton:{
+  marginTop:"-5%",
+    marginRight:10,
+    marginLeft:"auto",
+   flexDirection:"row"
+},
+cartnumbering:{
+    color:"teal",
+    marginHorizontal:10,
+    fontSize:18
+}
 };
 
 export default styles;

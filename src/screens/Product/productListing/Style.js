@@ -69,6 +69,17 @@ const styles={
         width:250,
        marginBottom:30
 
+    },
+    cartbutton:{
+        marginTop:45,
+        marginRight:10,
+        marginLeft:"auto",
+       flexDirection:"row"
+    },
+    cartnumbering:{
+        color:"teal",
+        marginHorizontal:10,
+        fontSize:18
     }
 }
 
