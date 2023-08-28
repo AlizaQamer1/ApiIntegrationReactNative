@@ -45,12 +45,17 @@ const styles={
         backgroundColor: "rgba(0, 128, 128, 0.8)", 
         color: "white",
         padding: 10,
-        paddingHorizontal: 35,
+        paddingLeft: 30,
         marginHorizontal: 20,
         marginVertical:5,
-        width: 170,
+        width: 150,
         borderRadius: 10,
         
+      },
+      commentbutton:{
+        backgroundColor:"lightblue",
+        marginLeft:"-2%"
+
       },
       buttonText:{
         color:"black",
@@ -81,6 +86,10 @@ const styles={
         padding:10,
         textAlign:"justify",
        
+      },
+      addpostbutton:{
+        width:100,
+        marginHorizontal:20
       }
 }
 

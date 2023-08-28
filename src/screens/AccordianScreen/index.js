@@ -1,0 +1,66 @@
+import React from 'react'
+import styles from './Style'
+import { View,Button,Text,SafeAreaView,ScrollView } from 'react-native'
+import AccordianComponent from '../../components/AccordianComponent'
+import MultiLevelCollapsibleList from '../../components/Collapsible'
+export default function AccordianScreen() {
+    const data = [
+        {
+          title: 'Parent 1',
+          subItems: [
+            {
+              title: 'Child 1',
+              subItems: [
+                { title: 'Child 1.1' },
+                { title: 'Child 1.2' },
+              ],
+            },
+          ],
+        },
+        {
+          title: 'Parent 2',
+          subItems: [
+            {
+              title: 'Child 2',
+              subItems: [
+                { title: 'Child 2.1' },
+                { title: 'Child 2.2' },
+              ],
+            },
+          ],
+        },
+        // ...more items
+      ];
+      
+  return (
+    <View>
+    <SafeAreaView style={styles.container}>
+    <Text style={{fontSize:30, color:"black"}}>Accordian with animation</Text>
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
+      style={styles.container}>
+      <AccordianComponent title="Native development">
+          <Text style={styles.textSmall}>React Native lets you create truly native apps and
+          doesn't compromise your users' experiences. It provides a core set of platform
+          agnostic native components </Text>
+      </AccordianComponent>
+      <AccordianComponent title="Fast refresh">
+          <Text style={styles.textSmall}>See your changes as soon as you save.
+          With the power of JavaScript, React Native lets you iterate at
+          lightning speed.</Text>
+      </AccordianComponent>
+      <AccordianComponent title="Cross-platform">
+          <Text style={styles.textSmall}>React components wrap existing native code
+          and interact with native APIs via React’s declarative UI paradigm
+          and JavaScript. This enables native app development for whole new teams
+          of developers</Text>
+          <View style={styles.seperator}></View>
+          <Button title="See more..."/>
+      </AccordianComponent>
+    </ScrollView>
+   
+  </SafeAreaView>
+  <MultiLevelCollapsibleList data={data}/>
+  </View>
+  )
+}

@@ -51,6 +51,19 @@ const styles = {
     marginLeft: 10,
     marginBottom: 10,
   },
+  image: {
+    width: 200,
+    height: 200,
+    margin: 15,
+  },
+  textstyle: {
+    margin: 10,
+    backgroundColor:"teal",
+    width:120,
+    color:"white",
+    borderRadius:10,
+    padding:10
+  },
 };
 
 export default styles;

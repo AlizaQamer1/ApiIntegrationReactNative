@@ -10,7 +10,7 @@ const styles = {
     paddingBottom:20,
     backgroundColor:"white",
     textTransform: 'capitalize',
-    fontFamily: 'Roboto-Black',
+    fontFamily: 'NotoSans-Italic',
   },
 };
 

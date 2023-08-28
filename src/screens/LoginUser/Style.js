@@ -23,6 +23,9 @@ const styles={
     },
     userinfo:{
         paddingVertical:15,
+    },
+    infobutton:{
+        marginVertical:10
     }
 
 }

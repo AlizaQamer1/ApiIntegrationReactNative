@@ -4,11 +4,11 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../../screens/home';
 import Todo from '../../screens/todo';
 import ProductStack from './ProductStack';
-import AddToCart from '../../screens/addToCart';
 import PostStack from './PostStack';
-import LoginUser from '../../screens/LoginUser';
+import UserStack from './UserStack';
 import {images} from '../../assets/images';
 import {Image} from 'react-native';
+import AccordianScreen from '../../screens/AccordianScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -36,7 +36,6 @@ const BottomStack = ({navigation}) => {
               style={{
                 width: 25,
                 height: 25,
-             
               }}
             />
           ),
@@ -56,9 +55,10 @@ const BottomStack = ({navigation}) => {
           title: 'Products',
           headerShown: false,
           tabBarIcon: ({focused, color, size}) => (
-            <Image 
-            source={focused ? images.productfilled : images.productunfilled}
-             style={{width: 25, height: 25}} />
+            <Image
+              source={focused ? images.productfilled : images.productunfilled}
+              style={{width: 25, height: 25}}
+            />
           ),
           headerStyle: {
             backgroundColor: '#0492C2',
@@ -76,9 +76,10 @@ const BottomStack = ({navigation}) => {
           title: 'Post',
           headerShown: false,
           tabBarIcon: ({focused, color, size}) => (
-            <Image 
-            source={focused ? images.postfilled : images.postunfilled}
-             style={{width: 25, height: 25}} />
+            <Image
+              source={focused ? images.postfilled : images.postunfilled}
+              style={{width: 25, height: 25}}
+            />
           ),
           headerStyle: {
             backgroundColor: '#0492C2',
@@ -96,9 +97,10 @@ const BottomStack = ({navigation}) => {
           title: 'Todo',
           headerShown: false,
           tabBarIcon: ({focused, color, size}) => (
-            <Image 
-            source={focused ? images.todofilled : images.todounfilled}
-             style={{width: 25, height: 25}} />
+            <Image
+              source={focused ? images.todofilled : images.todounfilled}
+              style={{width: 25, height: 25}}
+            />
           ),
           headerStyle: {
             backgroundColor: '#0492C2',
@@ -109,17 +111,18 @@ const BottomStack = ({navigation}) => {
           },
         }}
       />
-      
+
       <Tab.Screen
         name="user"
-        component={LoginUser}
+        component={UserStack}
         options={{
           title: 'User',
           headerShown: false,
           tabBarIcon: ({focused, color, size}) => (
-            <Image 
-            source={focused ? images.userfilled : images.userunfilled}
-             style={{width: 25, height: 25}} />
+            <Image
+              source={focused ? images.userfilled : images.userunfilled}
+              style={{width: 25, height: 25}}
+            />
           ),
           headerStyle: {
             backgroundColor: '#0492C2',
@@ -130,8 +133,28 @@ const BottomStack = ({navigation}) => {
           },
         }}
       />
-        
-       
+
+      <Tab.Screen
+        name="practice"
+        component={AccordianScreen}
+        options={{
+          title: 'practice',
+          headerShown: false,
+          tabBarIcon: ({focused, color, size}) => (
+            <Image
+              source={focused ? images.userfilled : images.userunfilled}
+              style={{width: 25, height: 25}}
+            />
+          ),
+          headerStyle: {
+            backgroundColor: '#0492C2',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      />
     </Tab.Navigator>
   );
 };

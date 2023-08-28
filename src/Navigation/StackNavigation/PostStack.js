@@ -9,7 +9,9 @@ from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PostDetail from '../../screens/Post/postDetail';
 import PostListing from '../../screens/Post/postListing';
+import AddPost from '../../screens/addPost';
 import User from '../../screens/User';
+import AddComment from '../../screens/addComments';
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +54,34 @@ export default function PostStack() {
         component={User}
         options={{
           title:"User",
+          headerStyle: {
+            backgroundColor: '#0492C2',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      />
+       <Stack.Screen
+        name="addpost"
+        component={AddPost}
+        options={{
+          title:"addpost",
+          headerStyle: {
+            backgroundColor: '#0492C2',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      />
+        <Stack.Screen
+        name="addcomment"
+        component={AddComment}
+        options={{
+          title:"addcomment",
           headerStyle: {
             backgroundColor: '#0492C2',
           },

@@ -49,7 +49,8 @@ export default function LoginUser() {
       <Text style={[styles.text, styles.userinfo]}>Email: {userData_?.email}</Text>
      
       <Text style={[styles.text, styles.userinfo]}>Gender: {userData_?.gender}</Text>
-     
+      <View style={styles.infobutton}><Button 
+      title="Edit Profile Information" color="teal" onPress={()=>navigation.navigate("profileinfo")}/></View>
       <Button title="logout" onPress={buttonPress} />
     </View>
   );

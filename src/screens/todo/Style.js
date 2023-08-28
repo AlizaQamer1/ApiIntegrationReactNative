@@ -5,14 +5,15 @@ const styles={
       
     },
     text:{
-        fontSize:16,
+        fontSize:14,
         padding:10,
         borderWidth:1,
         borderColor:"gray",
         marginVertical:10,
         borderRadius:10,
         color:"black",
-        width:300
+        width:270,
+        fontFamily:'NotoSans-Light'
     },
     switch:{
         marginHorizontal:10,

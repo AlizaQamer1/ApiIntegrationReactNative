@@ -10,17 +10,20 @@ import {
   ScrollView,
   Linking,
   NativeModules,
+  StyleSheet,
   NativeEventEmitter,
 } from 'react-native';
 import {PermissionsAndroid} from 'react-native';
 import BleManager from 'react-native-ble-manager';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import DeviceInfo from 'react-native-device-info';
+import ColorPalette from 'react-native-color-palette';
 import styles from './Style';
 import Geolocation from '@react-native-community/geolocation';
 import Title from '../../components/Title';
 import Input from '../../components/input';
 import {logToConsole} from '../../../ReactotronConfig';
-
+import tinycolor from 'tinycolor2';
 const BleManagerModule = NativeModules.BleManager;
 const BleManagerEmitter = new NativeEventEmitter(BleManagerModule);
 
@@ -30,11 +33,42 @@ export default function AddProductCategory({navigation}) {
   const [currentLongitude, setCurrentLongitude] = useState('...');
   const [currentLatitude, setCurrentLatitude] = useState('...');
   const [locationStatus, setLocationStatus] = useState('');
-
+  const [androidId, setAndroidId] = useState('');
   const peripherals = new Map();
   const [isScanning, setIsScanning] = useState(false);
   const [connected, setConnected] = useState(false);
   const [bluetoothDevices, setBluetoothDevices] = useState([]);
+  let appName = DeviceInfo.getApplicationName();
+  const [baseOs, setBaseOS] = useState();
+  const [batteryLevel, setBatteryLevel] = useState();
+  let deviceId = DeviceInfo.getDeviceId();
+  const [fingerPrint, setFingerPrint] = useState();
+  const [macAddress, setMacAddress] = useState();
+  const [textColor, setTextColor] = useState('#000000');
+  const [backgroundColor, setBackgroundColor] = useState('#FFFFFF');
+
+
+  const handleColorChange = (color) => {
+    if (textColor == color) {
+      setTextColor(color);
+    } else {
+      setBackgroundColor(color);
+      setTextColor(tinycolor(color).lighten(30).toString()); // Calculate a lighter shade of the background color
+    }
+  };
+
+  const paletteColors = [
+    '#FF0000',
+    '#00FF00',
+    '#0000FF',
+    '#FFFF00',
+    '#FF00FF',
+    '#00FFFF',
+    '#FFA500',
+    '#800080',
+    '#008080',
+    '#808080',
+  ];
 
   useEffect(() => {
     // turn on bluetooth if it is not on
@@ -140,7 +174,6 @@ export default function AddProductCategory({navigation}) {
             fontSize: 20,
             marginLeft: 10,
             marginBottom: 5,
-           
           }}>
           Nearby Devices:
         </Text>
@@ -466,6 +499,32 @@ export default function AddProductCategory({navigation}) {
     navigation.navigate('productCategory');
   };
 
+  const getAndroidId = () => {
+    DeviceInfo.getAndroidId().then(androidId => {
+      setAndroidId(androidId);
+    });
+  };
+
+  const getBaseOs = () => {
+    DeviceInfo.getBaseOs().then(baseOs => {
+      setBaseOS(baseOs);
+    });
+  };
+  const getBatteryLevel = () => {
+    DeviceInfo.getBatteryLevel().then(batteryLevel => {
+      setBatteryLevel(batteryLevel);
+    });
+  };
+  const getFingerPrint = () => {
+    DeviceInfo.getFingerprint().then(fingerprint => {
+      setFingerPrint(fingerprint);
+    });
+  };
+  const getMacAddress = () => {
+    DeviceInfo.getMacAddress().then(mac => {
+      setMacAddress(mac);
+    });
+  };
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -505,15 +564,14 @@ export default function AddProductCategory({navigation}) {
           <Text> Latitude: {currentLatitude}</Text>
         </View>
         <View>
-            <Text
-              style={{
-                fontSize: 30,
-                textAlign: 'center',
-              
-              }}>
-              React Native BLE Manager Tutorial
-            </Text>
-         
+          <Text
+            style={{
+              fontSize: 30,
+              textAlign: 'center',
+            }}>
+            React Native BLE Manager Tutorial
+          </Text>
+
           <TouchableOpacity
             activeOpacity={0.5}
             style={styles.buttonStyle}
@@ -529,6 +587,52 @@ export default function AddProductCategory({navigation}) {
             <RenderItem peripheral={device} />
           </View>
         ))}
+        <View>
+          <Text>Android ID: {androidId}</Text>
+          <Button onPress={getAndroidId} title="Get Android Id" />
+        </View>
+
+        <Text>Appname is : {appName}</Text>
+        <View>
+          <Text>Base OS: {baseOs}</Text>
+          <Button onPress={getBaseOs} title="Get Base Os" />
+        </View>
+        <View>
+          <Text>Battery Level : {batteryLevel}</Text>
+          <Button onPress={getBatteryLevel} title="Get Battery Level" />
+        </View>
+
+        <Text>Device Id is : {deviceId}</Text>
+
+        <View>
+          <Text>Finger Print : {fingerPrint}</Text>
+          <Button onPress={getFingerPrint} title="Get Finger Prin" />
+        </View>
+
+        <View>
+          <Text>Mac Address : {macAddress}</Text>
+          <Button onPress={getMacAddress} title="Get Mac Address" />
+        </View>
+        <View style={[Stylee.container, {backgroundColor}]}>
+          <View style={Stylee.textContainer}>
+            <Text style={[Stylee.text, {color: textColor}]}>Sample Text</Text>
+          </View>
+          <View style={[Stylee.circle,{backgroundColor:textColor}]}>
+          </View>
+          <ColorPalette
+            onChange={handleColorChange}
+            value={textColor}
+            colors={paletteColors}
+            title={''}
+            icon={
+              <TouchableOpacity
+                style={[Stylee.icon, {backgroundColor: textColor}]}
+              />
+            }
+          />
+        </View>
+
+        <Text style={Stylee.fontcheck}>Check fonts</Text>
 
         <View style={styles.savebutton}>
           <Button title="Save Category" onPress={handleSave} color="teal" />
@@ -537,3 +641,34 @@ export default function AddProductCategory({navigation}) {
     </ScrollView>
   );
 }
+
+const Stylee = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  fontcheck:{
+    fontFamily: 'Koulen-Regular',
+    fontSize:20
+
+  },
+  textContainer: {
+    marginBottom: 20,
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: 'bold',
+   
+  },
+  icon: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+  },
+  circle:{
+    width:100,
+    height:100,
+    borderRadius:50
+  }
+});

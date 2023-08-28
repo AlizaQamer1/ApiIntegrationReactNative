@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Button, ActivityIndicator } from 'react-native';
+import { View, Text, FlatList, Button, ActivityIndicator, Image } from 'react-native';
 
 import Title from '../../components/Title';
 import styles from './Style';
@@ -10,12 +10,25 @@ import HomeSkeleton from '../../skeleton/homeSkeleton';
 import { logToConsole } from '../../../ReactotronConfig';
 
 export default function Home() {
+
+const [userImageUri, setUserImageUri] = useState(null);
+
   const [quotes, setQuotes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMoreQuotes, setHasMoreQuotes] = useState(true);
 
   
+  useEffect(() => {
+    const fetchUserImage = async () => {
+      const imageUri = await storage.getString('image');
+      setUserImageUri(imageUri); 
+    };
+
+    fetchUserImage();
+  }, []);
+
+
   useEffect(() => {
     fetchData();
     logToConsole({hasMoreQuotes})
@@ -67,6 +80,9 @@ export default function Home() {
   return (
     <View style={styles.homecontainer}>
       <Title title={'Quotations That Inspire'} />
+   
+      <Image source={{ uri: userImageUri }} style={styles.profileImage} />
+
       {quotes.length > 0 ? (
         <FlatList
           data={quotes}
