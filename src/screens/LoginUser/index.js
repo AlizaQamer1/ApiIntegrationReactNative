@@ -12,7 +12,6 @@ const localStorageKey = 'todos'; // Or a different key if needed
 
 
 export default function LoginUser() {
-  const [userData, setUserData] = useState({});
   const userData_ = useSelector(state => state?.auth?.userData);
 
   console.log('userData::::',userData_);
@@ -41,14 +40,14 @@ export default function LoginUser() {
       <View style={{ flexDirection: 'row' }}>
         <Image source={{ uri: userData_?.image }} style={styles.image} />
         <View style={styles.user}>
-          <Text style={styles.text}>{userData_?.firstName}</Text>
-          <Text style={{ color: 'black' }}>{userData_?.lastName}</Text>
+          <Text style={styles.text}>{userData_?.additionalData.firstName}</Text>
+          <Text style={{ color: 'black' }}>{userData_?.additionalData.lastName}</Text>
         </View>
       </View>
-      <Text style={[styles.text, styles.userinfo]}>Username: {userData_?.username}</Text>
-      <Text style={[styles.text, styles.userinfo]}>Email: {userData_?.email}</Text>
+      <Text style={[styles.text, styles.userinfo]}>Username: {userData_?.additionalData.userName}</Text>
+      <Text style={[styles.text, styles.userinfo]}>Email: {userData_?.additionalData.email}</Text>
      
-      <Text style={[styles.text, styles.userinfo]}>Gender: {userData_?.gender}</Text>
+      <Text style={[styles.text, styles.userinfo]}>Gender: {userData_?.additionalData.gender}</Text>
       <View style={styles.infobutton}><Button 
       title="Edit Profile Information" color="teal" onPress={()=>navigation.navigate("profileinfo")}/></View>
       <Button title="logout" onPress={buttonPress} />

@@ -7,6 +7,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Registeration from '../../screens/registration';
 import ForgotPassword from '../../screens/forgotPassword';
 import Login from '../../screens/login';
+import FirstSection from '../../screens/registration/FirstSection';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,21 @@ const AutheticationStack = () => {
         component={Login}
         options={{
           title: 'Login', 
+          headerShown: false,
+          headerStyle: {
+            backgroundColor: '#0492C2', 
+          },
+          headerTintColor: '#fff', 
+          headerTitleStyle: {
+            fontWeight: 'bold', 
+          },
+        }}
+      />
+       <Stack.Screen
+        name="registeristscreen"
+        component={FirstSection}
+        options={{
+          title: 'registeristscreen', 
           headerShown: false,
           headerStyle: {
             backgroundColor: '#0492C2', 

@@ -1,8 +1,8 @@
 const styles = {
   text: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 'medium',
-    color: 'gray',
+    color: 'black',
     marginLeft: 10,
   },
   registerationform: {
@@ -64,6 +64,17 @@ const styles = {
     borderRadius:10,
     padding:10
   },
+  dropdown:{
+ 
+      borderWidth: 1,
+      borderColor: 'gray',
+      paddingVertical: 5,
+      margin: 10,
+      borderRadius: 5,
+      height: 56,
+      paddingLeft: 10,
+ 
+  }
 };
 
 export default styles;

@@ -23,12 +23,12 @@ import { loginSuccess } from '../../redux/actions';
 
 export default function Login({navigation}) {
 
-  const [username, setUserName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [userNameError, setUserNameError] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [isloading, setIsLoading] = useState(false);
-  const userNameInputRef = useRef();
+  const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const radioProps = [{label: 'Remember Me', value: 0}];
   const [isConnected, setIsConnected] = useState(true);
@@ -46,14 +46,14 @@ export default function Login({navigation}) {
 
   const handleLogin = async event => {
     
-    setUserNameError('');
+    setEmailError('');
     setPasswordError('');
     event.preventDefault();
 
     // Check if both fields have values
-    if (!username.trim() || !password.trim()) {
-      if (username.trim() === '') {
-        setUserNameError('Username is required.');
+    if (!email.trim() || !password.trim()) {
+      if (email.trim() === '') {
+        setEmailError('Email is required.');
       }
       if (password.trim() === '') {
         setPasswordError('Password is required.');
@@ -63,26 +63,25 @@ export default function Login({navigation}) {
 
     try {
       setIsLoading(true);
-      const data = await loginUser(username, password);
+      const data = await loginUser(email, password);
       dispatch(loginSuccess(data))
+      console.log("email and password values", email,password)
 
       if (data) {
-        storage.set('token', JSON.stringify(data.token));
-        storage.set('id', JSON.stringify(data.id));
-        console.log('Token and ID stored:');
+        storage.set('token', data.hashAT);
         navigation.replace('BottomStack');
         setIsLoading(false);
       } else {
-        setPasswordError('Username or password incorrect');
+        setPasswordError('email and  password incorrect');
       }
     } catch (error) {
-      setPasswordError('Username or password incorrect');
+      setPasswordError('email or password incorrect');
       console.log('error', error);
     }
   };
 
-  const handleUserNameFocus = () => {
-    setUserNameError('');
+  const handleEmailFocus = () => {
+    setEmailError('');
   };
 
   const handlePasswordFocus = () => {
@@ -98,21 +97,21 @@ export default function Login({navigation}) {
             <Image style={styles.logoimage} source={images.logo_image} />
             <Text style={styles.title}>Sign In to Continue</Text>
             <View style={styles.loginform}>
-              {/*Handling username input */}
-              <Text style={styles.text}>Username</Text>
+              {/*Handling email input */}
+              <Text style={styles.text}>Email</Text>
               <Input
-                value={username}
-                onChangeText={userName => setUserName(userName)}
-                placeholder={'Enter Username'}
-                ref={userNameInputRef}
+                value={email}
+                onChangeText={email => setEmail(email)}
+                placeholder={'Enter Email'}
+                ref={emailInputRef}
                 returnKeyType="next"
                 onSubmitEditing={() => passwordInputRef.current.focus()}
                 blurOnSubmit={false}
-                onFocus={handleUserNameFocus}
+                onFocus={handleEmailFocus}
               />
 
-              {!!userNameError && (
-                <Text style={styles.errorText}>{userNameError}</Text>
+              {!!emailError && (
+                <Text style={styles.errorText}>{emailError}</Text>
               )}
 
               {/*Handling passwoed input */}
@@ -161,7 +160,7 @@ export default function Login({navigation}) {
                 {/*Forgot Password and Registeration screens links */}
                 <View style={styles.rightfooter}>
                   <TouchableOpacity
-                    onPress={() => navigation.navigate('Register')}>
+                    onPress={() => navigation.navigate('registeristscreen')}>
                     <Text style={styles.footertext}>Make New Account</Text>
                   </TouchableOpacity>
                 </View>

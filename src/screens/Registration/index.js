@@ -13,8 +13,6 @@ import {
 } from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {PermissionsAndroid} from 'react-native';
-
-import {storage} from '../../Storage';
 import {logToConsole} from '../../../ReactotronConfig';
 import {images} from '../../assets/images/index';
 import styles from './style';
@@ -22,30 +20,28 @@ import {registerUser} from '../../helpers/PostApi';
 import Input from '../../components/input';
 import Buttoncomponent from '../../components/button';
 
-export default function Registeration({navigation}) {
+export default function Registeration({navigation, route}) {
+  const {userName, gender, phone, userRole, email} = route.params;
   const [isFormValid, setIsFormValid] = useState(false);
 
-  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [maidenName, setMaidenName] = useState('');
   const [age, setAge] = useState('');
-  const [email,setEmail]=useState('');
-  const [userNameError, setUserNameError] = useState('');
+
   const [passwordError, setPasswordError] = useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const [firstNameError, setfirstNameError] = useState('');
   const [lastNameError, setLastNameError] = useState('');
   const [ageError, setAgeError] = useState('');
-  const [emailError, setEmailError]=useState('')
-  const userNameInputRef = useRef();
+  const [maidenNameError, setMaidenNameError] = useState('');
+
   const passwordInputRef = useRef();
-  const confirmPasswordInputRef = useRef();
   const firstNameInputRef = useRef();
   const lastNameInputRef = useRef();
   const ageInputRef = useRef();
-  const emailInputRef=useRef();
+  const maidenNameInputRef = useRef();
+
   //for image
   const [image, setImage] = useState(null);
 
@@ -197,49 +193,15 @@ export default function Registeration({navigation}) {
 
     setImage(response.assets[0]);
   };
-  const validateForm = () => {
-    if (
-      userName.trim() !== '' &&
-      password.trim() !== '' &&
-      confirmPassword.trim() !== '' &&
-      firstName.trim() !== '' &&
-      lastName.trim() !== '' &&
-      age.trim() !== '' &&
-      password === confirmPassword &&
-      email.trim () !== ''
-    ) {
-      setIsFormValid(true);
-    } else {
-      setIsFormValid(false);
-    }
-  };
 
   const handleRegisteration = async event => {
-    setUserNameError('');
-    setPasswordError('');
-    setConfirmPasswordError('');
-    setfirstNameError('');
-    setLastNameError('');
-    setAgeError('');
-
-    validateForm();
-
     // Check for empty fields
-    if (userName.trim() === '') {
-      setUserNameError('Username is required.');
-    }
-    if (email.trim() === '') {
-      setEmailError('Email is required.');
-    }
-
+  
 
     if (password.trim() === '') {
       setPasswordError('Password is required.');
     }
 
-    if (confirmPassword.trim() === '') {
-      setConfirmPasswordError('Confirm Password is required.');
-    }
     if (firstName.trim() === '') {
       setfirstNameError('Firstname is required.');
     }
@@ -250,70 +212,79 @@ export default function Registeration({navigation}) {
       setAgeError('Age is required.');
     }
 
-    if (password !== confirmPassword) {
-      setConfirmPasswordError('Password and Confirm Password should be same.');
+    if (maidenName.trim() === '') {
+      setMaidenNameError('Maiden Name is required.');
     }
 
+   
     //password pattern
     const passwordPattern =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])(?=.{8,12})$/;
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])$/;
 
     //check for different conventions
-    if (
-      !passwordPattern.test(password) &&
-      !passwordPattern.test(confirmPassword)
-    ) {
+    if (!passwordPattern.test(password)) {
       let errorMessage = '';
-      if (password.length < 8 || password.length > 12) {
-        errorMessage += 'Password must be 8-12 characters long ';
+      if (password.length < 13) {
+        errorMessage += 'Password must be more than 13 characters.  ';
       }
+
       if (!/(?=.*[a-z])/.test(password)) {
-        errorMessage += 'Password must contain at least one lowercase letter ';
+        errorMessage +=
+          'Password must contain at least one lowercase letter.  ';
       }
       if (!/(?=.*[A-Z])/.test(password)) {
-        errorMessage += 'Password must contain at least one uppercase letter ';
+        errorMessage += 'Password must contain at least one uppercase letter. ';
       }
       if (!/(?=.*\d)/.test(password)) {
-        errorMessage += 'Password must contain at least one digit ';
+        errorMessage += 'Password must contain at least one digit.         ';
       }
       if (!/(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])/.test(password)) {
         errorMessage += 'Password must contain at least one special character ';
       }
       //if pattern donot match show error
 
-      setConfirmPasswordError(errorMessage);
+      setPasswordError(errorMessage);
     }
     try {
+      console.log(
+        'registeration values',
+        userName,
+        password,
+        firstName,
+        lastName,
+        age,
+        email,
+        gender,
+        phone,
+        maidenName,
+        userRole,
+      );
       const data = await registerUser(
         userName,
         password,
         firstName,
         lastName,
         age,
-        confirmPassword,
-        image,
-        email
+        email,
+        gender,
+        phone,
+        maidenName,
+        userRole,
       );
-      console.log("image", data.image.uri)
-      storage.set('image', data.image.uri);
-      if (isFormValid) {
-        navigation.replace('BottomStack');
+
+      if (data) {
+        navigation.replace('AuthStack');
+      } else {
+        console.log('Invalid fields');
       }
     } catch (error) {
       console.log('error', error);
     }
   };
 
-  const handleUserNameFocus = () => {
-    setUserNameError('');
-  };
 
   const handlePasswordFocus = () => {
     setPasswordError('');
-  };
-
-  const handleConfirmPasswordFocus = () => {
-    setConfirmPasswordError('');
   };
 
   const handleFirstNameFocus = () => {
@@ -327,43 +298,44 @@ export default function Registeration({navigation}) {
   const handleAgeFocus = () => {
     setAgeError('');
   };
-  const handleEmailFocus=()=>{
-    setEmailError('')
-  }
  
-  const handleUserNameChange = userName => {
-    setUserName(userName);
-    validateForm();
+
+  const handleMaidenNameFocus = () => {
+    setMaidenNameError('');
   };
+
+
 
   const handlePasswordChange = password => {
     setPassword(password);
-    validateForm();
-  };
-
-  const handleConfirmPasswordChange = confirmPassword => {
-    setConfirmPassword(confirmPassword);
-    validateForm();
   };
 
   const handleFirstNameChange = firstName => {
     setFirstName(firstName);
-    validateForm();
   };
 
   const handleLastNameChange = lastName => {
     setLastName(lastName);
-    validateForm();
   };
 
   const handleAgeChange = age => {
     setAge(age);
-    validateForm();
   };
-  const handleEmailChange = email => {
-    setEmail(email);
-    validateForm();
+ 
+
+  const handleMaidenNameChange = maidenName => {
+    setMaidenName(maidenName);
   };
+ 
+  const userroledata = [
+    {label: 'NormalAdmin', value: 'NormalAdmin'},
+    {label: 'SuperAdmin', value: 'SuperAdmin'},
+    {label: 'NormalUser', value: 'NormalUser'},
+  ];
+  const genderdata = [
+    {label: 'Male', value: 'Male'},
+    {label: 'Female', value: 'Female'},
+  ];
 
   return (
     <ScrollView>
@@ -374,40 +346,8 @@ export default function Registeration({navigation}) {
               <Image style={styles.logoimage} source={images.logo_image} />
               <Text style={styles.title}>Make New Account</Text>
               <View style={styles.registerationform}>
-              {/* email input */}
-              <Text style={styles.text}>Email</Text>
-                <Input
-                  value={email}
-                  onChangeText={handleEmailChange}
-                  placeholder={'Enter Email'}
-                  ref={emailInputRef}
-                  returnKeyType="next"
-                  onSubmitEditing={() => userNameInputRef?.current?.focus()}
-                  blurOnSubmit={false}
-                  onFocus={handleEmailFocus}
-                  inputType="text"
-                />
-                {/* Showing error*/}
-                {!!emailError && (
-                  <Text style={styles.errorText}>{emailError}</Text>
-                )}
-                {/* UserName input */}
-                <Text style={styles.text}>Username</Text>
-                <Input
-                  value={userName}
-                  onChangeText={handleUserNameChange}
-                  placeholder={'Enter Username'}
-                  ref={userNameInputRef}
-                  returnKeyType="next"
-                  onSubmitEditing={() => firstNameInputRef?.current?.focus()}
-                  blurOnSubmit={false}
-                  onFocus={handleUserNameFocus}
-                  inputType="text"
-                />
-                {/* Showing error*/}
-                {!!userNameError && (
-                  <Text style={styles.errorText}>{userNameError}</Text>
-                )}
+              
+           
                 {/* first name input */}
                 <Text style={styles.text}>Firstname</Text>
                 <Input
@@ -416,7 +356,7 @@ export default function Registeration({navigation}) {
                   placeholder={'Enter Firstname'}
                   ref={firstNameInputRef}
                   returnKeyType="next"
-                  onSubmitEditing={() => lastNameInputRef?.current?.focus()}
+                  onSubmitEditing={() => maidenNameInputRef?.current?.focus()}
                   blurOnSubmit={false}
                   onFocus={handleFirstNameFocus}
                   inputType="text"
@@ -424,6 +364,23 @@ export default function Registeration({navigation}) {
                 {/* Showing error*/}
                 {!!firstNameError && (
                   <Text style={styles.errorText}>{firstNameError}</Text>
+                )}
+                {/* maiden name input */}
+                <Text style={styles.text}>Maidenname</Text>
+                <Input
+                  value={maidenName}
+                  onChangeText={handleMaidenNameChange}
+                  placeholder={'Enter Maidenname'}
+                  ref={maidenNameInputRef}
+                  returnKeyType="next"
+                  onSubmitEditing={() => lastNameInputRef?.current?.focus()}
+                  blurOnSubmit={false}
+                  onFocus={handleMaidenNameFocus}
+                  inputType="text"
+                />
+                {/* Showing error*/}
+                {!!maidenNameError && (
+                  <Text style={styles.errorText}>{maidenNameError}</Text>
                 )}
                 {/* lastname input */}
                 <Text style={styles.text}>Lastname</Text>
@@ -457,6 +414,9 @@ export default function Registeration({navigation}) {
                 />
                 {/* Showing error*/}
                 {!!ageError && <Text style={styles.errorText}>{ageError}</Text>}
+               
+             
+
                 {/* Password input */}
                 <Text style={styles.text}>Password</Text>
                 <Input
@@ -464,36 +424,18 @@ export default function Registeration({navigation}) {
                   onChangeText={handlePasswordChange}
                   placeholder={'Enter Password'}
                   ref={passwordInputRef}
-                  returnKeyType="next"
-                  onSubmitEditing={() =>
-                    confirmPasswordInputRef?.current?.focus()
-                  }
+                  returnKeyType="done"
+                  onSubmitEditing={Keyboard.dismiss}
                   blurOnSubmit={false}
-                  secureTextEntry={true}
+                  secureTextEntry
                   onFocus={handlePasswordFocus}
                 />
                 {/* Showing error */}
                 {!!passwordError && (
                   <Text style={styles.errorText}>{passwordError}</Text>
                 )}
-                {/* Confirm Password input */}
-                <Text style={styles.text}>Confirm Password</Text>
-                <Input
-                  value={confirmPassword}
-                  onChangeText={handleConfirmPasswordChange}
-                  placeholder={'Enter Confirm Password'}
-                  ref={confirmPasswordInputRef}
-                  returnKeyType="done"
-                  onSubmitEditing={Keyboard.dismiss}
-                  blurOnSubmit={false}
-                  secureTextEntry
-                  onFocus={handleConfirmPasswordFocus}
-                />
-                {/* Showing error */}
-                {!!confirmPasswordError && (
-                  <Text style={styles.errorText}>{confirmPasswordError}</Text>
-                )}
-                {/* Inout input */}
+
+                {/* Image input */}
                 <Text style={styles.text}>Add Profile Image</Text>
                 <View style={styles.imagebutton}>
                   <TouchableOpacity
