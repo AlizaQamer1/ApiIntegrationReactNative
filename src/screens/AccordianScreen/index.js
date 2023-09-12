@@ -73,6 +73,7 @@ export default function AccordianScreen() {
   // </View>
   // )
   return (
+    
     <MaskedView
       style={{flex: 1, flexDirection: 'row', height: '100%'}}
       maskElement={
