@@ -33,7 +33,8 @@ export const images = {
     todounfilled:require('../images/todounfilled.png'),
     userfilled:require('../images/userfilled.png'),
     userunfilled:require('../images/userunfilled.png'),
-    backarrow:require('../images/backarrow.png')
+    backarrow:require('../images/backarrow.png'),
+    mask:require('../images/mask.jpg')
  
   }
   

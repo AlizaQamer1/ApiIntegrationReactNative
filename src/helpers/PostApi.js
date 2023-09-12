@@ -4,7 +4,7 @@ import { storage } from '../Storage';
 const BASE_URL =
   'http://ec2-18-144-155-86.us-west-1.compute.amazonaws.com:3000';
 // http://ec2-18-144-155-86.us-west-1.compute.amazonaws.com:3000
-
+const token=storage.getString("token")
 export const loginUser = async (email, password) => {
   try {
     const data = {
@@ -57,6 +57,7 @@ export const registerUser = async (
     const response = await axios.post(`${BASE_URL}/auth/signup`, data, {
       headers: {
         'Content-Type': 'application/json',
+        // 'Authorization':`Bearer ${token}`
       },
     });
     console.log('registeration data', response.data);

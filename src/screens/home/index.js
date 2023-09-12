@@ -1,37 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Button, ActivityIndicator, Image } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  Button,
+  ActivityIndicator,
+  Image,
+} from 'react-native';
 
 import Title from '../../components/Title';
 import styles from './Style';
-import { storage } from '../../Storage';
-import { useNavigation } from '@react-navigation/native';
-import { quotations } from '../../helpers/GetApi';
+import {storage} from '../../Storage';
+import {useNavigation} from '@react-navigation/native';
+import {quotations} from '../../helpers/GetApi';
 import HomeSkeleton from '../../skeleton/homeSkeleton';
-import { logToConsole } from '../../../ReactotronConfig';
+import {logToConsole} from '../../../ReactotronConfig';
 
 export default function Home() {
-
-const [userImageUri, setUserImageUri] = useState(null);
+  const [userImageUri, setUserImageUri] = useState(null);
 
   const [quotes, setQuotes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMoreQuotes, setHasMoreQuotes] = useState(true);
 
-  
   useEffect(() => {
     const fetchUserImage = async () => {
       const imageUri = await storage.getString('image');
-      setUserImageUri(imageUri); 
+      setUserImageUri(imageUri);
     };
 
     fetchUserImage();
   }, []);
 
-
   useEffect(() => {
     fetchData();
-    logToConsole({hasMoreQuotes})
+    logToConsole({hasMoreQuotes});
   }, [currentPage]);
 
   const fetchData = async () => {
@@ -40,7 +44,7 @@ const [userImageUri, setUserImageUri] = useState(null);
       if (currentPage === 1) {
         setQuotes(data);
       } else {
-        setQuotes((prevQuotes) => [...prevQuotes, ...data]);
+        setQuotes(prevQuotes => [...prevQuotes, ...data]);
       }
 
       // Update hasMoreQuotes based on the fetched data
@@ -57,12 +61,12 @@ const [userImageUri, setUserImageUri] = useState(null);
 
   const handleLoadMore = () => {
     if (!isLoading && hasMoreQuotes) {
-      setCurrentPage((prevPage) => prevPage + 1);
+      setCurrentPage(prevPage => prevPage + 1);
       setIsLoading(true);
     }
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({item}) => (
     <View style={styles.Gridcontainer}>
       <Text style={styles.Griditem}>{item.quote}</Text>
     </View>
@@ -79,15 +83,16 @@ const [userImageUri, setUserImageUri] = useState(null);
 
   return (
     <View style={styles.homecontainer}>
+      
       <Title title={'Quotations That Inspire'} />
-   
-      <Image source={{ uri: userImageUri }} style={styles.profileImage} />
+      
+      <Image source={{uri: userImageUri}} style={styles.profileImage} />
 
       {quotes.length > 0 ? (
         <FlatList
           data={quotes}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={item => item.id.toString()}
           onEndReached={handleLoadMore}
           onEndReachedThreshold={0.2}
           ListFooterComponent={renderFooter}
